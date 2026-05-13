@@ -1,0 +1,6 @@
+npm --version (para ver la version)
+npm create vite@latest . (para iniciar el proyecto con vite en el directorio en el que estas)
+npm  i (instala los paquetes para iniciarlo)
+npm run dev(levanta el proyecto)
+
+local host http://localhost:5173/
