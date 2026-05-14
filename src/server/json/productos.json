@@ -1,0 +1,26 @@
+{
+  "productos": [
+    {
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLm6vsYWP0EWJTETsAdeEKCtYuJY4s9aqTVg&s",
+      "name": "Bibimbap",
+      "category": "Corea",
+      "price": "50",
+      "id": "Fdy_xNuaalA"
+    },
+    {
+      "url": "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/2F60018A-7D11-48CA-BB83-B32497E02BF5/Derivates/bc77ea56-073d-4648-82a4-0782bbf1d37c.jpg",
+      "name": "Rollito Cangrejo",
+      "category": "Sushi",
+      "price": "24",
+      "id": "InyVYjKeMEc"
+    },
+    {
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWATdgIPCpRai-JIJqsE1h0R4JVKo4IyzpZQ&s",
+      "name": "Tofu",
+      "category": "asian",
+      "price": "15",
+      "id": "bu7urX_fpB4"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
