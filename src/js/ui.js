@@ -1,0 +1,65 @@
+export function renderApp() {
+return 
+  `
+  <section id="stock" class="stock flex flex-col items-center justify-center">
+    <h1>Restaurante</h1>
+
+    <article class="col-span-1 100 h-full w-box p-3 grid grid-cols-4 space-x-3">
+      <div class="barra-buscar col-span-3 100 h-full w-full p-3 grid grid-cols-4 space-x-3">
+        <div class="col-span-3">
+          <input type="text" class="border border-gray-200 w-full p-2 rounded-lg" placeholder="Ingrese el nombre del producto a buscar"/>
+        </div>
+
+        <div class="buscar col-span-1">
+          <button id="buscar" class="bg-indigo-100 p-2 w-full rounded-lg hover:bg-indigo-300">Buscar</button>
+        </div>
+      </div>
+
+      <div class="add col-span-1 flex items-center justify-end pr-5">
+        <button id="add" class="bg-purple-400 p-2 rounded-lg cursor-pointer hover:bg-purple-700 hover:text-stone-100 px-5 md:w-64 w-full">add nuevo producto</button>
+      </div>
+    </article>
+        
+    <article id="formulario" class="formulario w-box hidden"> <!-- Aca va un hidden-->
+      <form class="grid grid-cols-2 space-x-3 space-y-2" id="formData">
+        <div class="col-span-2 grid grid-cols-4 space-y-2 space-x-1">
+          <div class="col-span-2 space-y-2">
+            <label for="url">Photo</label>
+            <input type="text" name="url" id="url" placeholder="https://ejemplo.com/mi-photo" class="border border-gray-200 w-full p-2 rounded-lg" required/>
+          </div>
+          <div class="col-span-2  space-y-2">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Name" class="border border-gray-200 w-full p-2 rounded-lg" required/>
+          </div>
+          <div class="col-span-2 space-y-2">
+            <label for="category">category</label>
+            <select type="select" name="category" id="category" class="border border-gray-200 w-full p-2 rounded-lg">
+              <option value="japon">Japon</option>
+              <option value="corea">Corea</option>
+              <option value="china">China</option>
+            </select>
+          </div>
+          <div class="col-span-2 space-y-2">
+            <label for="data">price</label>
+            <input type="number" id="price" name="price" class="border border-gray-200 w-full p-2 rounded-lg" require/>
+          </div>
+        </div>
+      </form>
+
+      <div id="botones" class="botones flex justify-around w-full py-2">
+
+        <div class="create">
+          <button  type="submit" id="create" class="bg-zinc-300 hover:bg-stone-400 hover:text-stone-100 px-5 py-2 rounded">create</button>
+        </div>
+        <div class="cancel">
+          <button id="cancel" class="bg-zinc-300 hover:bg-stone-400 hover:text-stone-100 px-5 py-2 rounded">cancel</button>
+        </div>
+      </div>
+    </article>
+
+    <section id="data-container" class="w-full p-5 grid grid-cols-1 md:grid-cols-3 space-x-3 space-y-3">
+    </section>
+    
+  </section>
+  `
+}
