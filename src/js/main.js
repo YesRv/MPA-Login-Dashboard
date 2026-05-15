@@ -1,4 +1,9 @@
-import './style.css'
+import { sidesBar } from "./UI2.js"
+
+
+const app = document.getElementById(`app`)
+app.innerHTML = sidesBar()
+
 
 document.querySelector("#app").innerHTML = `
     <div id="app">
