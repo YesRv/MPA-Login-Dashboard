@@ -4,7 +4,7 @@ export function productos() {
     const btnAdd = document.getElementById("add"); 
     const btnCancel = document.getElementById("cancel");
     const btnCreate = document.getElementById("create");
-    const dataContainer = document.getElementById("data");
+    const dataContainer = document.getElementById("data-container");
     const inputBuscar = document.getElementById("inputB");
     const btnBuscar = document.getElementById("buscar");
     
@@ -73,7 +73,7 @@ export function productos() {
             }
     
             if (response.ok) {
-                alert(editingId ? "Producto actualizado" : "Producto creado");
+                alert(editingId ? "Updated Product" : "Product created");
                 location.reload();
             }
         } catch (error) {
@@ -98,29 +98,30 @@ export function productos() {
     
     // muestra el producto
     document.addEventListener("DOMContentLoaded", async () => {
-        const containerData = document.getElementById("data-container");
         try {
             const data = await getData();
             data.forEach((element) => {
                 const { id, url, name, category, price } = element;
                 const product = document.createElement("div");
-                product.innerHTML = `
-                    <div class="bg-olive-100 p-3 rounded rounded-lg flex flex-col items-center space-y-2">    
-                        <article><h3 class="nombrecito text-2xl font-bold">${name}</h3></article>
-                        <figure class="flex flex-col items-center space-y-2 h-60 w-64 md:w-100">
-                            <img class="md:w-200 lg:max-h-40 w-50 object-cover" src="${url}" alt="${name}"/>    
-                            <span class="text-lg text-stone-500">Precio: ${price}</span>
-                            <span>${category}</span>
+                product.innerHTML =`
+                <div class="producto">
+                <article>
+                            <h3 class="nombrecito">${name}</h3>
+                        </article>
+                         <figure>
+                        <img src="${url}" alt="${name}" />
+                            <span>Precio: ${price}</span>
+                            <span class="category">${category}</span>
                         </figure>
-                        <section id="actions" class="flex justify-around w-full">
+                        <section id="actions">
                             <div>
-                                <button class="btn-editar bg-orange-300 hover:bg-amber-500 hover:text-stone-100 px-5 py-2 rounded">Editar</button>
-                            </div>    
+                                <button class="btn-editar">Editar</button>
+                                </div>
                             <div>
-                                <button class="btn-eliminar bg-red-400 hover:text-stone-100 hover:bg-red-600 px-5 py-2 rounded">Eliminar</button>
-                            </div>    
+                            <button class="btn-eliminar">Eliminar</button>
+                            </div>
                         </section>
-                    </div>`;
+                    </div>`
     
                 // eliminar
                 product.querySelector(".btn-eliminar").addEventListener("click", async () => {
@@ -154,8 +155,31 @@ export function productos() {
                     btnCreate.setAttribute("data-editing", id); // ID en el boton
                 });
     
-                containerData.appendChild(product);
+                dataContainer.appendChild(product);
             });
-        } catch {containerData.innerHTML = "No products";}
+        } catch {dataContainer.innerHTML = "No products";}
     });
+    
+    // CATEGORIAS
+    const japon = document.getElementById("japon");
+    const corea = document.getElementById("corea");
+    const china = document.getElementById("china");
+    
+    const contenedorCategorias = document.getElementById("categorias");
+
+    contenedorCategorias.addEventListener("click", (event) => {
+        if (event.target.tagName === "BUTTON") {
+            const categoria = event.target.id;
+            const cards = document.querySelectorAll("#data-container > div");
+
+            cards.forEach((card) => {
+                const categoryElement = card.querySelector(".category");
+                if (categoryElement) {
+                    const categoryText = categoryElement.textContent.toLowerCase();
+                    card.style.display = categoryText === categoria ? "block" : "none";
+                }
+            });
+        }
+    });
+
 }
