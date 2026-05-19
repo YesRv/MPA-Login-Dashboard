@@ -24,7 +24,7 @@ return (`
           <i class="bx bx-user"></i>
           <span>Administrador</span>
         </div>
-        <div>
+        <div> 
           <i class="bx bx-heart"></i>
           <span>Favoritos</span>
         </div>
@@ -58,3 +58,4 @@ return (`
       </div>
     </aside>`)
 }
+
