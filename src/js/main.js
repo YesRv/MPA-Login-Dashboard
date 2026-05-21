@@ -75,7 +75,7 @@ let carrito = [];
 
 
 export function agregarAlCarrito(producto)  {
-    const existente = carrito.find(item => item.idd === producto.id);
+    const existente = carrito.find(item => item.id === producto.id);
     if (existente) {
         existente.cantidad += 1;
     } else {
@@ -111,12 +111,12 @@ function actualizarTotal() {
 }
 
 function renderizarCarrito() {
-    const contenedor = document.getElementById("carrito-item")
+    const contenedor = document.getElementById("carrito-items")
     const vacio = document.getElementById("carrito-vacio")
 
     if (!contenedor) return 
 
-    const itemsAnteriores = contenedor.querySelectorAll("carrito-item")
+    const itemsAnteriores = contenedor.querySelectorAll(".carrito-item")
     itemsAnteriores.forEach(el => el.remove())
 
     if (carrito.length === 0) {
@@ -131,14 +131,28 @@ function renderizarCarrito() {
         const div = document.createElement("div")
         div.classList.add("carrito-item")
         div.innerHTML = `
-            <span>${item.nombre}</span>
-            <div>
-                <button data-id="${item.id}" class="btn-menos">-</button>
-                <span>${item.cantidad}</span>
-                <button data-id="${item.id}" class="btn-mas">+</button>
+            <div class="carrito-item-img-wrap">
+                <img 
+                    src="${item.url || ''}" 
+                    alt="${item.nombre}" 
+                    class="carrito-item-img"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                />
+                <div class="carrito-item-img-fallback" style="display:none;">🍽️</div>
             </div>
-            <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
-            <button data-id="${item.id}" class="btn-quitar">🗑️</button>
+            <div class="carrito-item-info">
+                <span class="carrito-item-nombre">${item.nombre}</span>
+                <span class="carrito-item-precio-unit">$${Number(item.precio).toFixed(2)} c/u</span>
+                <div class="carrito-item-controles">
+                    <button data-id="${item.id}" class="btn-menos">−</button>
+                    <span class="carrito-item-cantidad">${item.cantidad}</span>
+                    <button data-id="${item.id}" class="btn-mas">+</button>
+                </div>
+            </div>
+            <div class="carrito-item-right">
+                <button data-id="${item.id}" class="btn-quitar" title="Eliminar">🗑️</button>
+                <span class="carrito-item-subtotal">$${(item.precio * item.cantidad).toFixed(2)}</span>
+            </div>
         `
 
         div.querySelector(".btn-menos").addEventListener("click", ()=>  
@@ -282,25 +296,33 @@ export function initCarrito() {
             data.forEach((element) => {
                 const { id, url, name, category, price } = element;
                 const product = document.createElement("div");
-                product.innerHTML =`
+                product.innerHTML = `
                 <div class="producto">
-                <article>
-                            <h3 class="nombrecito">${name}</h3>
-                        </article>
-                         <figure>
+                    <article>
+                        <h3 class="nombrecito">${name}</h3>
+                    </article>
+                    <figure>
                         <img src="${url}" alt="${name}" />
-                            <span>Precio: ${price}</span>
-                            <span class="category">${category}</span>
-                        </figure>
-                        <section id="actions">
-                            <div>
-                                <button class="btn-editar">Editar</button>
-                                </div>
-                            <div>
+                        <span>Precio: ${price}</span>
+                        <span class="category">${category}</span>
+                    </figure>
+                    <section id="actions">
+                        <div>
+                            <button class="btn-agregar">Agregar</button> 
+                        </div>
+                        <div>
+                            <button class="btn-editar">Editar</button>
+                        </div>
+                        <div>
                             <button class="btn-eliminar">Eliminar</button>
-                            </div>
-                        </section>
-                    </div>`
+                        </div>
+                    </section>
+                </div>`;
+
+                // agregar
+                product.querySelector(".btn-agregar").addEventListener("click", () => {
+                    agregarAlCarrito({id, nombre: name, precio: Number(price), url });
+                });
     
                 // eliminar
                 product.querySelector(".btn-eliminar").addEventListener("click", async () => {
@@ -361,3 +383,4 @@ export function initCarrito() {
         }
     });
 
+initCarrito();
