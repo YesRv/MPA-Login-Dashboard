@@ -229,7 +229,7 @@ export function initCarrito() {
 // STOCK
 
 // Formulario
-    const btnAdd = document.getElementById("add"); 
+    const btnAdd = document.getElementById("add-button"); 
     const btnCancel = document.getElementById("cancel");
     const btnCreate = document.getElementById("create");
     const dataContainer = document.getElementById("data-container");
@@ -237,7 +237,8 @@ export function initCarrito() {
     const btnBuscar = document.getElementById("buscar");
     
     // boton para añadir
-    btnAdd.addEventListener("click", () =>{
+    btnAdd.addEventListener("click", (event) =>{
+        console.log("se precionó el botón: ", event)
         resetForm();
         document.getElementById("formulario").classList.remove("hidden");
     });
@@ -280,8 +281,9 @@ export function initCarrito() {
             const name = document.getElementById("name").value;
             const category = document.getElementById("category").value;
             const price = document.getElementById("price").value;
+            const country = document.getElementById("country").value;
     
-            const productData = { url, name, category, price };
+            const productData = { url, name, category, price, country };
     
             let response;
             if (editingId) {
@@ -329,7 +331,7 @@ export function initCarrito() {
         try {
             const data = await getData();
             data.forEach((element) => {
-                const { id, url, name, category, price } = element;
+                const { id, url, name, category, price, country } = element;
                 const product = document.createElement("div");
                 product.innerHTML = `
                 <div class="producto">
@@ -338,18 +340,19 @@ export function initCarrito() {
                     </article>
                     <figure>
                         <img src="${url}" alt="${name}" />
-                        <span>Precio: ${price}</span>
+                        <span>Price: $${price}</span>
                         <span class="category">${category}</span>
+                        <span class="country">${country}</span>
                     </figure>
                     <section id="actions">
                         <div>
-                            <button class="btn-agregar">Agregar</button> 
+                            <button class="btn-agregar">Add</button> 
                         </div>
                         <div>
-                            <button class="btn-editar">Editar</button>
+                            <button class="btn-editar">Edit</button>
                         </div>
                         <div>
-                            <button class="btn-eliminar">Eliminar</button>
+                            <button class="btn-eliminar">Delete</button>
                         </div>
                     </section>
                 </div>`;
@@ -386,6 +389,7 @@ export function initCarrito() {
                     document.getElementById("name").value = name;
                     document.getElementById("category").value = category;
                     document.getElementById("price").value = price;
+                    document.getElementById("country").value = country;
     
                     btnCreate.textContent = "Actualizar";
                     btnCreate.setAttribute("data-editing", id); // ID en el boton
@@ -425,7 +429,7 @@ export function initCarrito() {
         document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active-cat"));
         btn.classList.add("active-cat");
 
-        aplicarFiltro(btn.id);
+        aplicarFiltro(btn.id.toLowerCase());
     });
 
 initCarrito();

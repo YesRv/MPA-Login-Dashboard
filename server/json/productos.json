@@ -1,25 +1,180 @@
 {
   "productos": [
     {
-      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLm6vsYWP0EWJTETsAdeEKCtYuJY4s9aqTVg&s",
-      "name": "Bibimbap",
-      "category": "corea",
-      "price": "50",
-      "id": "Fdy_xNuaalA"
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzDp_D0waP966Q2mPlHJGqCT-iSTM9GDXZQA&s",
+      "name": "Gyoza",
+      "category": "appetizers",
+      "price": "25",
+      "country": "japan",
+      "id": "XjU3D77nS7M"
     },
     {
-      "url": "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480_1_5x/img/recipe/ras/Assets/2F60018A-7D11-48CA-BB83-B32497E02BF5/Derivates/bc77ea56-073d-4648-82a4-0782bbf1d37c.jpg",
-      "name": "Rollito Cangrejo",
-      "category": "japon",
-      "price": "24",
-      "id": "InyVYjKeMEc"
+      "url": "https://www.muyjapones.com/wp-content/uploads/2019/08/Takoyaki-1.jpg",
+      "name": "Takoyaki",
+      "category": "appetizers",
+      "price": "25",
+      "country": "japan",
+      "id": "xkX0vy8P4_8"
     },
     {
-      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWATdgIPCpRai-JIJqsE1h0R4JVKo4IyzpZQ&s",
-      "name": "Tofu",
-      "category": "china",
-      "price": "15",
-      "id": "bu7urX_fpB4"
+      "url": "https://harineraelmolino.com/wp-content/uploads/2025/05/flat-lay-of-japanese-vegetable-tempura-recipe-with-ginger-ponzu-sauce.jpg",
+      "name": "Tempura de vegetales",
+      "category": "appetizers",
+      "price": "25",
+      "country": "japan",
+      "id": "ImdynvfbCug"
+    },
+    {
+      "url": "https://static.vecteezy.com/system/resources/previews/047/734/451/non_2x/three-onigiri-a-japanese-rice-ball-are-presented-on-a-black-plate-photo.jpg",
+      "name": "Onigiri",
+      "category": "appetizers",
+      "price": "25",
+      "country": "japan",
+      "id": "70RxoPwo5I8"
+    },
+    {
+      "url": "https://i.blogs.es/81e7bf/nigiris/1200_900.jpg",
+      "name": "Nigiri",
+      "category": "appetizers",
+      "price": "25",
+      "country": "japan",
+      "id": "MxW1xl_bO0A"
+    },
+    {
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPBGcDMZ-aDoMZlEGm5RGcHxaoQFBwAhomyw&s",
+      "name": "Temaki",
+      "category": "appetizers",
+      "price": "25",
+      "country": "japan",
+      "id": "cQIXkiWDBek"
+    },
+    {
+      "url": "https://thumbs.dreamstime.com/b/sushi-de-maki-gunkan-japon%C3%A9s-sobre-plato-madera-con-palillos-y-salsa-colocado-un-comida-japonesa-327528107.jpg",
+      "name": "Gunkan-maki",
+      "category": "appetizers",
+      "price": "25",
+      "country": "japan",
+      "id": "SXw3kL9ArJY"
+    },
+    {
+      "url": "https://monstersushi.es/blog/wp-content/uploads/2022/06/Sushi-Clasic-Completo-scaled.jpg",
+      "name": "Sashimi",
+      "category": "appetizers",
+      "price": "25",
+      "country": "japan",
+      "id": "LNwyrMGroBI"
+    },
+    {
+      "url": "https://telemaki.com/blog/assets/uploads/2022/06/combo-de-mochis-artesanos-4u-65.jpg",
+      "name": "Mochi",
+      "category": "desserts",
+      "price": "32",
+      "country": "japan",
+      "id": "aJbZfMMsTjc"
+    },
+    {
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWD3Ayyjnr2j39M-O-BHr1kABkoCr5qj3j8g&s",
+      "name": "Dorayaki",
+      "category": "desserts",
+      "price": "32",
+      "country": "japan",
+      "id": "F0mEVu5Xpv4"
+    },
+    {
+      "url": "https://www.orientalmarket.es/wp-content/uploads/2021/03/kelly-visel-MIMgqOQLnOc-unsplash.jpg",
+      "name": "Taiyaki dulce",
+      "category": "desserts",
+      "price": "32",
+      "country": "japan",
+      "id": "IN28NtAIN6w"
+    },
+    {
+      "url": "https://sugaryums.com/wp-content/uploads/2023/06/Japanese-Black-Sesame-Ice-Cream-Recipe-SugarYums-1.jpg",
+      "name": "Black sesame ice cream",
+      "category": "desserts",
+      "price": "32",
+      "country": "japan",
+      "id": "RdfMmgQ0mFw"
+    },
+    {
+      "url": "https://s.hdnux.com/photos/01/56/15/44/28891447/3/rawImage.jpg",
+      "name": "Sake",
+      "category": "beverages",
+      "price": "16",
+      "country": "japan",
+      "id": "XGCaEA15unM"
+    },
+    {
+      "url": "https://www.hakutsuru-sake.com/global/eu/product/product_file/file/img_eu_umeshugenshu%20kazami_720.jpg",
+      "name": "Umeshu",
+      "category": "beverages",
+      "price": "18",
+      "country": "japan",
+      "id": "cGcFFb7tkSU"
+    },
+    {
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2kCbz88sOY3VxETKhXC7k6ozsIWLcz5HG7g&s",
+      "name": "Japanese beer",
+      "category": "beverages",
+      "price": "10",
+      "country": "japan",
+      "id": "OFkQANWmisM"
+    },
+    {
+      "url": "https://recetasdecocina.elmundo.es/wp-content/uploads/2025/03/ramen-receta.jpg",
+      "name": "Ramen",
+      "category": "mainCourses",
+      "price": "55",
+      "country": "japan",
+      "id": "nysriy1MWGk"
+    },
+    {
+      "url": "https://sal-pimienta.com/wp-content/uploads/2019/03/DSC_0305_2-1024x683.jpg",
+      "name": "Shoyu Ramen",
+      "category": "mainCourses",
+      "price": "55",
+      "country": "japan",
+      "id": "YNdcD2-Ve-0"
+    },
+    {
+      "url": "https://media.scoolinary.app/blog/images/2025/07/Ramen_IVI5301-scaled.jpg",
+      "name": "Tonkotsu Ramen",
+      "category": "mainCourses",
+      "price": "58",
+      "country": "japan",
+      "id": "pNpBWBTMjtk"
+    },
+    {
+      "url": "https://cocinista.b-cdn.net/download/bancorecursos/recetas/receta-fideos-ramen-con-miso.jpg",
+      "name": "Miso Ramen",
+      "category": "mainCourses",
+      "price": "56",
+      "country": "japan",
+      "id": "dyQj8kvy9wA"
+    },
+    {
+      "url": "https://thumbs.dreamstime.com/b/el-ramen-shio-es-un-tipo-de-popular-japon%C3%A9s-que-se-caracteriza-por-su-sopa-base-sal-salada-382519748.jpg",
+      "name": "Shio Ramen",
+      "category": "mainCourses",
+      "price": "55",
+      "country": "japan",
+      "id": "Ab4IMqZ5r98"
+    },
+    {
+      "url": "https://productosdeldia.com/cdn/shop/articles/Aprende_a_Preparar_Pollo_Katsu_Japones_Facilmente.jpg?v=1730311320",
+      "name": "Chicken Katsu",
+      "category": "mainCourses",
+      "price": "59",
+      "country": "japan",
+      "id": "6qFsttSQ02Q"
+    },
+    {
+      "url": "https://cloudfront-eu-central-1.images.arcpublishing.com/prisa/MP56HQHV2VGW7P42ZHZMZMZUUM.jpg",
+      "name": "Japanese curry",
+      "category": "mainCourses",
+      "price": "55",
+      "country": "japan",
+      "id": "FuH9rXcgXAo"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
