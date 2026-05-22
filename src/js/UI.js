@@ -42,11 +42,21 @@ return (`
       <section id="shoppingCart"></section>
     </main>
 
+    <!-- Overlay para cerrar el carrito en móvil -->
+    <div id="carrito-overlay"></div>
+
+    <!-- Botón flotante del carrito (solo visible en móvil) -->
+    <button id="carrito-fab" aria-label="Ver carrito">
+      🛒
+      <span id="carrito-fab-badge">0</span>
+    </button>
+
     <aside id="carrito" class="carrito">
 
       <div class="carrito-box carrito-box-items">
         <div class="carrito-header">
           <h2>Order Menu</h2>
+          <button id="btn-cerrar-carrito" aria-label="Cerrar carrito">✕</button>
         </div>
         <div id="carrito-items" class="carrito-items">
           <p id="carrito-vacio" class="carrito-vacio">No hay productos aún</p>

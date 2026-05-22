@@ -160,6 +160,7 @@ function renderizarCarrito() {
     })
 
     actualizarTotal()
+    actualizarBadge()
 }
 
 function ConfirmarPedido() {
@@ -174,6 +175,36 @@ function ConfirmarPedido() {
     renderizarCarrito()
 }
 
+function actualizarBadge() {
+    const badge = document.getElementById("carrito-fab-badge")
+    if (!badge) return
+    const total = carrito.reduce((acc, item) => acc + item.cantidad, 0)
+    badge.textContent = total
+    badge.style.display = total > 0 ? "flex" : "none"
+}
+
+function abrirCarritoPanel() {
+    const carritoEl = document.getElementById("carrito")
+    const overlay = document.getElementById("carrito-overlay")
+    if (carritoEl) carritoEl.classList.add("abierto")
+    if (overlay) {
+        overlay.classList.add("visible")
+        overlay.style.display = "block"
+    }
+    document.body.style.overflow = "hidden"
+}
+
+function cerrarCarritoPanel() {
+    const carritoEl = document.getElementById("carrito")
+    const overlay = document.getElementById("carrito-overlay")
+    if (carritoEl) carritoEl.classList.remove("abierto")
+    if (overlay) {
+        overlay.classList.remove("visible")
+        setTimeout(() => { overlay.style.display = "none" }, 300)
+    }
+    document.body.style.overflow = ""
+}
+
 export function initCarrito() {
     renderizarCarrito()
 
@@ -181,6 +212,18 @@ export function initCarrito() {
     if (btnCheckout) {
         btnCheckout.addEventListener("click", ConfirmarPedido)
     }
+
+    // FAB: abrir carrito en móvil
+    const fab = document.getElementById("carrito-fab")
+    if (fab) fab.addEventListener("click", abrirCarritoPanel)
+
+    // Botón cerrar dentro del panel
+    const btnCerrar = document.getElementById("btn-cerrar-carrito")
+    if (btnCerrar) btnCerrar.addEventListener("click", cerrarCarritoPanel)
+
+    // Overlay: cerrar al tocar fuera
+    const overlay = document.getElementById("carrito-overlay")
+    if (overlay) overlay.addEventListener("click", cerrarCarritoPanel)
 }
 
 // STOCK
