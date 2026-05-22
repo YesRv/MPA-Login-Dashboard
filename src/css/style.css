@@ -1087,7 +1087,7 @@ body {
 @media (max-width: 860px) {
     .aside {
         width: 60px;
-        overflow: hidden;
+        /* overflow: hidden; */
     }
  
     .name-resturant,
@@ -1128,7 +1128,29 @@ body {
  
 @media (max-width: 640px) {
     .aside {
-        display: none;
+      height: 40px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* POR AHORA ES DECORACION IRRELEVANTE */
+    /* .option {
+      display: none;
+    } */
+
+    .head {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .option div {
+      display: flex;
+      flex-direction: row;
+      width: 20px;
+      background: red;
     }
  
     .carrito {
