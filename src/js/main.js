@@ -132,38 +132,30 @@ function renderizarCarrito() {
         div.classList.add("carrito-item")
         div.innerHTML = `
             <div class="carrito-item-img-wrap">
-                <img 
-                    src="${item.url || ''}" 
-                    alt="${item.nombre}" 
-                    class="carrito-item-img"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                />
+                <img src="${item.url || ''}" alt="${item.nombre}" class="carrito-item-img"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
                 <div class="carrito-item-img-fallback" style="display:none;">🍽️</div>
             </div>
             <div class="carrito-item-info">
                 <span class="carrito-item-nombre">${item.nombre}</span>
                 <span class="carrito-item-precio-unit">$${Number(item.precio).toFixed(2)} c/u</span>
                 <div class="carrito-item-controles">
-                    <button data-id="${item.id}" class="btn-menos">−</button>
+                    <button class="btn-menos">−</button>
                     <span class="carrito-item-cantidad">${item.cantidad}</span>
-                    <button data-id="${item.id}" class="btn-mas">+</button>
+                    <button class="btn-mas">+</button>
                 </div>
             </div>
             <div class="carrito-item-right">
-                <button data-id="${item.id}" class="btn-quitar" title="Eliminar">🗑️</button>
+                <button class="btn-quitar">🗑️</button>
                 <span class="carrito-item-subtotal">$${(item.precio * item.cantidad).toFixed(2)}</span>
             </div>
         `
-
-        div.querySelector(".btn-menos").addEventListener("click", ()=>  
+        div.querySelector(".btn-menos").addEventListener("click", () =>
             cambiarCantidad(item.id, item.cantidad - 1))
-
-        div.querySelector(".btn-mas").addEventListener("click", () => 
+        div.querySelector(".btn-mas").addEventListener("click", () =>
             cambiarCantidad(item.id, item.cantidad + 1))
-
-        div.querySelector(".btn-quitar").addEventListener("click", () => 
+        div.querySelector(".btn-quitar").addEventListener("click", () =>
             quitarDelCarrito(item.id))
-
         contenedor.appendChild(div)
     })
 
@@ -359,28 +351,38 @@ export function initCarrito() {
                 dataContainer.appendChild(product);
             });
         } catch {dataContainer.innerHTML = "No products";}
+        // Aplicar filtro activo después de cargar las cards
+        const btnActivo = document.querySelector(".cat-btn.active-cat");
+        if (btnActivo) aplicarFiltro(btnActivo.id);
     });
     
     // CATEGORIAS
-    const japon = document.getElementById("japon");
-    const corea = document.getElementById("corea");
-    const china = document.getElementById("china");
-    
     const contenedorCategorias = document.getElementById("categorias");
 
-    contenedorCategorias.addEventListener("click", (event) => {
-        if (event.target.tagName === "BUTTON") {
-            const categoria = event.target.id;
-            const cards = document.querySelectorAll("#data-container > div");
+    function aplicarFiltro(categoria) {
+        const cards = document.querySelectorAll("#data-container > div");
+        cards.forEach((card) => {
+            if (categoria === "home") {
+                card.style.display = "block";
+                return;
+            }
+            const categoryElement = card.querySelector(".category");
+            if (categoryElement) {
+                const categoryText = categoryElement.textContent.toLowerCase();
+                card.style.display = categoryText === categoria ? "block" : "none";
+            }
+        });
+    }
 
-            cards.forEach((card) => {
-                const categoryElement = card.querySelector(".category");
-                if (categoryElement) {
-                    const categoryText = categoryElement.textContent.toLowerCase();
-                    card.style.display = categoryText === categoria ? "block" : "none";
-                }
-            });
-        }
+    contenedorCategorias.addEventListener("click", (event) => {
+        const btn = event.target.closest("button.cat-btn");
+        if (!btn) return;
+
+        // Cambiar clase activa
+        document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active-cat"));
+        btn.classList.add("active-cat");
+
+        aplicarFiltro(btn.id);
     });
 
 initCarrito();
