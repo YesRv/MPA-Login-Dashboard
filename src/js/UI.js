@@ -60,6 +60,9 @@ return (`
       <div class="carrito-box carrito-box-items">
         <div class="carrito-header">
           <h2>Order Menu</h2>
+          <div class="carrito-header-badge">
+              🛒 <span id="carrito-header-count">0</span>
+          </div>
           <button id="btn-cerrar-carrito" aria-label="Cerrar carrito">✕</button>
         </div>
         <div id="carrito-items" class="carrito-items">

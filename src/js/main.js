@@ -88,6 +88,7 @@ function quitarDelCarrito(id) {
     carrito = carrito.filter(item => item.id !== id)
 
     renderizarCarrito()
+    actualizarBadge()
 }
 
 function cambiarCantidad(id, nuevaCantidad) {
@@ -100,6 +101,7 @@ function cambiarCantidad(id, nuevaCantidad) {
     } else {
         item.cantidad = nuevaCantidad
         renderizarCarrito()
+        actualizarBadge()
     }
 }
 
@@ -139,14 +141,14 @@ function renderizarCarrito() {
             <div class="carrito-item-info">
                 <span class="carrito-item-nombre">${item.nombre}</span>
                 <span class="carrito-item-precio-unit">$${Number(item.precio).toFixed(2)} c/u</span>
-                <div class="carrito-item-controles">
-                    <button class="btn-menos">−</button>
-                    <span class="carrito-item-cantidad">${item.cantidad}</span>
-                    <button class="btn-mas">+</button>
+                <div class="carrito-item-bottom">
+                    <div class="carrito-item-controles">
+                        <button class="btn-menos">−</button>
+                        <span class="carrito-item-cantidad">${item.cantidad}</span>
+                        <button class="btn-mas">+</button>
+                    </div>
+                    <button class="btn-quitar">🗑️</button>
                 </div>
-            </div>
-            <div class="carrito-item-right">
-                <button class="btn-quitar">🗑️</button>
                 <span class="carrito-item-subtotal">$${(item.precio * item.cantidad).toFixed(2)}</span>
             </div>
         `
@@ -177,10 +179,17 @@ function ConfirmarPedido() {
 
 function actualizarBadge() {
     const badge = document.getElementById("carrito-fab-badge")
-    if (!badge) return
+    const headerCount = document.getElementById("carrito-header-count")
+    // if (!badge) return
     const total = carrito.reduce((acc, item) => acc + item.cantidad, 0)
-    badge.textContent = total
-    badge.style.display = total > 0 ? "flex" : "none"
+    if (badge) {
+        badge.textContent = total
+        badge.style.display = total > 0 ? "flex" : "none"
+    }
+    if(headerCount) {
+        headerCount.textContent = total
+    }
+    
 }
 
 function abrirCarritoPanel() {
