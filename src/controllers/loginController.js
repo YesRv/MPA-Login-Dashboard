@@ -75,7 +75,7 @@ export async function loginController(appContainer) {
     }
     try {
       let response;
-      response = await fetch(API_URL, {
+      response = await fetch("http://localhost:3000/users", {
         method: "POST",
         body: JSON.stringify(userData),
       });

@@ -182,6 +182,12 @@
       "username": "Kurohana-Adm",
       "passward": "123456",
       "id": "imSwzcHFA2U"
+    },
+    {
+      "username": "maria520",
+      "email": "maria@gmail.com",
+      "password": "123",
+      "id": "nUAhW6YXV0k"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

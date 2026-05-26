@@ -1,5 +1,7 @@
 import { fetchApiData } from "../utils/utils.js";
 import { agregarAlCarrito, initCarrito } from "./cartController.js";
+import { cartAdmnistrator } from "../components/cartAdm.js";
+import { cartUser } from "../components/cartUser.js";
 
 function resetForm(btnCreate) {
   const form = document.getElementById("formData");
@@ -35,29 +37,7 @@ export async function renderProducts() {
     data.forEach((element) => {
       const { id, url, name, category, price, country } = element;
       const product = document.createElement("div");
-      product.innerHTML = `
-                <div class="producto">
-                    <article>
-                        <h3 class="nombrecito">${name}</h3>
-                    </article>
-                    <figure>
-                        <img src="${url}" alt="${name}" />
-                        <span>Price: $${price}</span>
-                        <span class="category">${category}</span>
-                        <span class="country">${country}</span>
-                    </figure>
-                    <section id="actions">
-                        <div>
-                            <button class="btn-agregar">Add</button>
-                        </div>
-                        <div>
-                            <button class="btn-editar">Edit</button>
-                        </div>
-                        <div>
-                            <button class="btn-eliminar">Delete</button>
-                        </div>
-                    </section>
-                </div>`;
+      product.innerHTML = cartAdmnistrator(name, url, price, category, country);
 
       // agregar al carrito
       product.querySelector(".btn-agregar").addEventListener("click", () => {
