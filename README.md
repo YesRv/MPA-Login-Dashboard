@@ -48,18 +48,20 @@ index.html
     ├── main.js                 # Entry point — decide entre login y home según auth
     ├── views/
     │   ├── loginView.js        # Templates HTML del login/registro
-    │   └── homeView.js         # Templates HTML del dashboard, carrito y productos
+    │   └── homeView.js         # Template HTML del dashboard y carrito
     ├── controllers/
     │   ├── loginController.js   # Lógica de autenticación y registro
     │   ├── homeController.js    # Lógica de renderizado, búsqueda, filtros y CRUD
-    │   └── cartController.js    # Lógica del carrito (agregar, quitar, cantidades, total)
+    │   ├── cartController.js    # Lógica del carrito (agregar, quitar, cantidades, total)
+    │   └── sidebarController.js # Lógica de navegación y eventos del sidebar
     ├── components/
     │   ├── cartAdm.js           # Componente de tarjeta de producto (admin)
-    │   └── cartUser.js          # Componente de tarjeta de producto (usuario)
+    │   ├── cartUser.js          # Componente de tarjeta de producto (usuario)
+    │   └── sidebar.js           # Componente reutilizable del sidebar con secciones por rol
     ├── utils/
     │   └── utils.js             # Funciones auxiliares (fetchApiData)
     ├── css/
-    │   └── style.css            # Estilos globales (1677 líneas)
+    │   └── style.css            # Estilos globales
     └── assets/
         ├── font/                # Tipografía Bankai
         └── img/                 # Logo, hero, fotos
@@ -147,7 +149,7 @@ Los archivos estáticos se generan en la carpeta `dist/`. Se pueden servir con c
 
 | Usuario | Contraseña |
 |---|---|
-| `Kurohana-Adm` | `Kurohana2026` |
+| `Kurohana-Adm` | `123456` |
 
 ---
 
