@@ -20,7 +20,7 @@ export async function loginController(appContainer) {
   // CUENTA ADMINISTRATIVA
 
   const userAdm = "Kurohana-Adm";
-  const passAdm = "Kurohana2026";
+  const passAdm = "123456";
 
   formLogin.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -38,24 +38,37 @@ export async function loginController(appContainer) {
 
       if (userAdm === usernameValue && passAdm === passwordValue) {
         messageLoginUser.innerText = "Welcome administrator";
-        localStorage.setItem("auth", true);
+        localStorage.setItem("auth", "true");
+        localStorage.setItem("role", "admin");
+        localStorage.setItem("username", userAdm);
         if (appContainer) {
           appContainer.innerHTML = homeView();
-          initHome();
-        }
-        return true;
-      } else {
-        messageLoginUser.textContent = `Welcome to Kurohana`;
-        localStorage.setItem("auth", true);
-        console.log("usuario autenticado");
-        if (appContainer) {
-          appContainer.innerHTML = homeView();
-          initHome();
+          initHome(userAdm, "admin", appContainer);
         }
         return true;
       }
-    } catch (error) {
-      alert("hubo un error: ", error);
+
+      // validar que el men exista
+      const userExists = data.some(
+        (u) => u.username === usernameValue && u.password === passwordValue
+      );
+
+      if (userExists) {
+        messageLoginUser.textContent = "Welcome to Kurohana";
+        localStorage.setItem("auth", "true");
+        localStorage.setItem("role", "user");
+        localStorage.setItem("username", usernameValue);
+        if (appContainer) {
+          appContainer.innerHTML = homeView();
+          initHome(usernameValue, "user", appContainer);
+        }
+        return true;
+      }
+
+      messageLoginUser.textContent = "Invalid username or password";
+      return false;
+    } catch {
+      alert("Connection error — make sure JSON Server is running");
     }
   });
   // CREAR USUARIO

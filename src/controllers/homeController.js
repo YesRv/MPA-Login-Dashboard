@@ -2,6 +2,8 @@ import { fetchApiData } from "../utils/utils.js";
 import { agregarAlCarrito, initCarrito } from "./cartController.js";
 import { cartAdmnistrator } from "../components/cartAdm.js";
 import { cartUser } from "../components/cartUser.js";
+import sidebar from "../components/sidebar.js";
+import sidebarController from "./sidebarController.js";
 
 function resetForm(btnCreate) {
   const form = document.getElementById("formData");
@@ -143,7 +145,7 @@ async function sendData() {
   }
 }
 
-export function initHome() {
+export function initHome(username, isAdmin, appContainer) {
   // Elementos
   const btnCreate = document.getElementById("create");
   const inputBuscar = document.getElementById("inputB");
@@ -151,6 +153,13 @@ export function initHome() {
   const btnAdd = document.getElementById("add-button");
   const btnCancel = document.getElementById("cancel");
   const contenedorCategorias = document.getElementById("categorias");
+
+  const sidebarContainer = document.getElementById("sidebar-container");
+
+  sidebarContainer.innerHTML = sidebar(username, isAdmin);
+
+  // iniciar el controlador del sidebar
+  sidebarController(appContainer);
 
   // iniciar carrito
   initCarrito();
