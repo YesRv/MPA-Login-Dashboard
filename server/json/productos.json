@@ -169,12 +169,19 @@
       "id": "6qFsttSQ02Q"
     },
     {
-      "url": "https://cloudfront-eu-central-1.images.arcpublishing.com/prisa/MP56HQHV2VGW7P42ZHZMZMZUUM.jpg",
-      "name": "Japanese curry",
-      "category": "mainCourses",
-      "price": "55",
+      "url": "https://avatars.githubusercontent.com/u/173982082?v=4",
+      "name": "Gustavo Sabrozo",
+      "category": "appetizers",
+      "price": "3999999997",
       "country": "japan",
-      "id": "FuH9rXcgXAo"
+      "id": "edYEf8qP4LQ"
+    }
+  ],
+  "users": [
+    {
+      "username": "Kurohana-Adm",
+      "passward": "123456",
+      "id": "imSwzcHFA2U"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
