@@ -1,3 +1,5 @@
+// Esta es la carta de los productos a mostrar para el usuario
+
 export function cartUser(name, url, price, category, country) {
   return `
   <div class="producto">
