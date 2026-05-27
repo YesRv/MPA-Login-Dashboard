@@ -1,0 +1,201 @@
+/* ========== LOGIN ========== */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&family=DM+Sans:wght@300;400&display=swap');
+
+.container-login {
+    width: 380px;
+    background: var(--fnd2);
+    border: 0.5px solid var(--fnd3);
+    border-radius: var(--border-radius);
+    padding: 40px 35px;
+    position: relative;
+    left: 300px;
+    top: 150px;
+    box-shadow: 0 10px 30px rgba(111, 50, 228, 0.08), 4px 4px 0 0 var(--fnd3);
+    font-family: 'DM Sans', sans-serif;
+}
+
+.container-login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color1), var(--color4));
+    border-radius: 16px 16px 0 0;
+}
+
+.container-login .brand {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.container-login .brand-name {
+    display: block;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--txt1);
+    letter-spacing: 0.12em;
+    line-height: 1;
+}
+
+.container-login .brand-sub {
+    display: block;
+    font-family: 'Bankai', sans-serif;
+    font-size: 13px;
+    color: var(--color4);
+    letter-spacing: 0.22em;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+.welcome {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 0.5px solid var(--fnd3);
+}
+
+.welcome h2 {
+    font-size: 1.3rem;
+    color: var(--txt1);
+    margin-bottom: 6px;
+}
+
+.text-welcome {
+    font-size: 12px;
+    color: var(--txt2);
+    margin-bottom: 16px;
+}
+
+.welcome button {
+    background: var(--fnd1);
+    border: 1px solid var(--fnd3);
+    padding: 8px 16px;
+    font-family: 'Bankai';
+    font-size: 12px;
+    color: var(--color1);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    margin: 0 4px;
+}
+
+.welcome button:hover {
+    background: var(--color1);
+    color: var(--white);
+}
+
+.container-loginForm, .container-loginNew {
+    display: flex;
+    flex-direction: column;
+}
+
+.container-login form {
+    display: flex;
+    flex-direction: column;
+}
+
+.container-login label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color1);
+    margin-bottom: 6px;
+    margin-top: 16px;
+}
+
+.container-login label:first-of-type {
+    margin-top: 0;
+}
+
+.container-login input {
+    width: 100%;
+    background: var(--fnd1);
+    border: none;
+    border-bottom: 1.5px solid var(--fnd3);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--txt1);
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.container-login input:focus {
+    border-bottom-color: var(--color1);
+    background: var(--purple-light);
+    box-shadow: 0 2px 8px rgba(111, 50, 228, 0.05);
+}
+
+.container-login input::placeholder {
+    color: var(--txt3);
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.container-login button[type="submit"], #adduser {
+    width: 100%;
+    margin-top: 26px;
+    padding: 14px;
+    background: var(--color1);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Bankai';
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(73, 28, 176, 0.2);
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.container-login button[type="submit"]:hover, #adduser:hover {
+    background: var(--color2);
+    transform: translateY(-1px);
+}
+
+.container-login button[type="submit"]:active, #adduser:active {
+    background: var(--color3);
+    transform: scale(0.99);
+}
+
+.form-footer, .form-footer-New {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-footer p, .form-footer-New p {
+    font-size: 13px;
+    color: var(--txt2);
+}
+
+.container-login span {
+    color: var(--color1);
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color1);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+}
+
+.container-login span:hover {
+    color: var(--color4);
+    border-bottom-color: var(--color4);
+}
+
+#message {
+    font-size: 12px;
+    color: var(--color4);
+    text-align: center;
+    margin-top: 12px;
+    min-height: 16px;
+    font-family: 'DM Sans', sans-serif;
+}

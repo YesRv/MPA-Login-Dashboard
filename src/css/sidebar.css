@@ -1,0 +1,134 @@
+/* ========== SIDEBAR IZQUIERDO ========== */
+
+.aside {
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Bankai';
+    color: var(--fnd1);
+    background-color: var(--color1);
+    box-sizing: border-box;
+}
+
+.head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 8px;
+    gap: 12px;
+}
+
+.name-resturant {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.name-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.name-resturant img {
+  align-items: center;
+    width: 80px;
+    border-radius: 50%;
+}
+
+.name-resturant h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+}
+
+.name-resturant span {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    text-align: center;
+}
+
+.profile svg  {
+    width: 20px;
+    border-radius: 0;
+    flex-shrink: 0;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+    border-radius: 50px;
+    background-color: #0000000a;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 4px;
+    padding: 8px;
+}
+
+.option div svg {
+    width: 20px !important;
+    height: 20px !important;
+    flex-shrink: 0;
+}
+
+.option div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    background-color: transparent;
+    font-size: 0.85rem;
+}
+
+.option div.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.exit {
+    margin-top: auto;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.exit button#exit-btn {
+    width: 80%;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-family: 'Bankai';
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.03em;
+}
+
+.exit button#exit-btn:hover {
+    background-color: rgba(194, 61, 61, 0.25);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
+}
+
+.exit button#exit-btn:active {
+    transform: scale(0.98);
+}

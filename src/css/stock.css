@@ -1,0 +1,375 @@
+/* ========== STOCK ========== */
+
+.stock {
+  max-width: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: 0 10px 30px rgba(111, 50, 228, 0.05);
+  padding: 20px 24px;
+  min-height: 100vh;
+}
+
+.nombre-restaurante {
+  font-size: 28px;
+  color: var(--purple-main);
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.hero {
+  background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.15)), url('/src/assets/img/stock/stock.jpg') center/cover;
+  border-radius: var(--border-radius);
+  padding: 30px;
+  margin-bottom: 30px;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+}
+
+.mensajes .saludo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 0 5px 0;
+}
+
+.mensajes .saludo:first-child {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.mensajes p:last-child {
+  font-size: 14px;
+  color: #d0cfcf;
+  margin: 10px 0 0 0;
+}
+
+.contenedor-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.contenedor-buscar {
+  display: flex;
+  flex: 1;
+  background-color: #f1f3f9;
+  border-radius: 12px;
+  padding: 6px 12px;
+  align-items: center;
+}
+
+.barra-buscar {
+  flex: 1;
+}
+
+.barra-buscar input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 14px;
+  color: var(--text-dark);
+  font-family: 'Bankai';
+}
+
+.buscar button {
+  background-color: var(--purple-main);
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Bankai';
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.buscar button:hover {
+  background-color: var(--purple-dark);
+}
+
+.add button {
+  background-color: var(--purple-main);
+  color: var(--white);
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-family: 'Bankai';
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(111, 50, 228, 0.2);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.add button:hover {
+  background-color: var(--purple-dark);
+  transform: translateY(-2px);
+}
+
+.categorias {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.cat-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--fnd3);
+  color: var(--color1);
+  border: 1px solid #e2e8f0;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: 'Bankai';
+  font-weight: 600;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 90px;
+  justify-content: center;
+}
+
+.cat-btn:hover {
+  border-color: var(--purple-main);
+  color: var(--purple-main);
+}
+
+.cat-btn.active-cat {
+  background-color: var(--purple-main);
+  color: var(--white);
+  border-color: var(--purple-main);
+}
+
+.cat-btn.active-cat:hover {
+  background-color: var(--purple-dark);
+  border-color: var(--purple-dark);
+  color: var(--white);
+}
+
+.cat-btn svg {
+  flex-shrink: 0;
+}
+
+.formulario {
+  background-color: var(--purple-light);
+  padding: 25px;
+  border-radius: var(--border-radius);
+  margin-bottom: 30px;
+  border: 1px solid #e1d5f5;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.formData {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.formData div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formData label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--purple-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.formData input, .formData select {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background-color: var(--white);
+  font-size: 14px;
+  outline: none;
+}
+
+.formData input:focus, .formData select:focus {
+  border-color: var(--purple-main);
+  box-shadow: 0 0 0 3px rgba(111, 50, 228, 0.15);
+}
+
+.botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.botones button {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+#create {
+  background-color: var(--purple-main);
+  color: var(--white);
+}
+
+#create:hover {
+  background-color: var(--purple-dark);
+}
+
+#cancel {
+  background-color: #e2e8f0;
+  color: var(--text-dark);
+}
+
+#cancel:hover {
+  background-color: #cbd5e1;
+}
+
+#data-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.producto {
+  background-color: var(--white);
+  border: 1px solid #edf2f7;
+  border-radius: var(--border-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.producto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(111, 50, 228, 0.08);
+}
+
+.producto figure {
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+}
+
+.producto figure img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.nombrecito {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--text-dark);
+}
+
+.producto figure span:nth-of-type(1) {
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 20px;
+  color: var(--purple-main);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.producto .category {
+  font-size: 11px;
+  background-color: var(--color4);
+  color: var(--fnd2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  align-self: flex-start;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.country {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 6px;
+  border-radius: 20px;
+  padding: 4px 12px;
+  background-color: var(--color5);
+  color: var(--fnd2);
+  font-size: 0.75rem;
+}
+
+#actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
+}
+
+#actions div {
+  flex: 1;
+}
+
+#actions button {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+
+.btn-agregar {
+  background-color: var(--purple-main);
+  color: white;
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  font-family: 'Bankai';
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+
+.btn-agregar:hover {
+  background-color: var(--purple-dark);
+}
+
+.btn-editar {
+  font-family: 'Bankai';
+  background-color: #f1f5f9;
+  color: var(--text-dark);
+}
+
+.btn-editar:hover {
+  background-color: #e2e8f0;
+}
+
+.btn-eliminar {
+  font-family: 'Bankai';
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.btn-eliminar:hover {
+  background-color: #fca5a5;
+}

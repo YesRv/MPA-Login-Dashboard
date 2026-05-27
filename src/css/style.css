@@ -1,4 +1,59 @@
-@import "tailwindcss";
-@import url(/src/css/productos.css);
-@import url(/src/css/sidesbar.css);
+/* ========== IMPORTS ========== */
+
+@import url('./sidebar.css');
+@import url('./carrito.css');
+@import url('./stock.css');
+@import url('./login.css');
+@import url('./responsive.css');
+@import url('./modal.css');
+
+/* ========== KUROHANA SPA — ESTILOS PRINCIPALES ========== */
+
+@font-face {
+    font-family: 'Bankai';
+    src: url(/src/assets/font/Bankai\ Demo\ Version.otf) format('opentype');
+}
+
+/* ========== VARIABLES GLOBALES ========== */
+
+:root {
+    --fnd1: #F0EEFF;
+    --fnd2: #FFFFFF;
+    --fnd3: #E0D9FF;
+    --color1: #491cb0;
+    --color2: #6A4FD8;
+    --color3: #5B3FBF;
+    --color4: #F4A23A;
+    --color5: #4CAF84;
+    --color6: #8c78f3;
+    --txt1: #1A1A2E;
+    --txt2: #4A4A6A;
+    --txt3: #9090B0;
+
+    --purple-main: #6f32e4;
+    --purple-light: #f3eeff;
+    --purple-dark: #491cb0;
+    --text-dark: #2c2930;
+    --text-muted: #8e8a94;
+    --bg-app: #f8f9fc;
+    --white: #ffffff;
+    --border-radius: 16px;
+}
+
+/* ========== BASE ========== */
+
+body {
+    background-color: var(--fnd1);
+    font-family: 'Bankai';
+    color: var(--text-dark);
+    margin: 0;
+    padding: 20px;
+}
+
+#app {
+    margin-left: 200px;
+    margin-right: 220px;
+    padding: 0px;
+}
+
 
