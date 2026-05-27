@@ -1,5 +1,7 @@
 import { loginView } from "../views/loginView.js"
 import { loginController } from "./loginController.js"
+import { settingView } from "../views/settingView.js"
+import { initSetting } from "./settingsController.js"
 
 export default function sidebarController(appContainer) {
     const exitButton = document.getElementById("exit-btn")
@@ -12,4 +14,11 @@ export default function sidebarController(appContainer) {
         loginController(appContainer);
 
     })
+
+    const btnSettings = document.getElementById("btn-settings");
+    btnSettings.addEventListener("click", () => {
+        appContainer.innerHTML = settingView();
+        initSetting(appContainer);
+    })
 }
+ 

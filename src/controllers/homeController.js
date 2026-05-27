@@ -29,7 +29,7 @@ function aplicarFiltro(categoria) {
   });
 }
 
-export async function renderProducts() {
+export async function renderProducts(role) {
   console.log("Renderizando productos")
   const dataContainer = document.getElementById("data-container");
   if (!dataContainer) return;
@@ -39,53 +39,59 @@ export async function renderProducts() {
     data.forEach((element) => {
       const { id, url, name, category, price, country } = element;
       const product = document.createElement("div");
-      product.innerHTML = cartAdmnistrator(name, url, price, category, country);
+      // product.innerHTML = cartAdmnistrator(name, url, price, category, country);
+      if (role === "admin") {
+        product.innerHTML = cartAdmnistrator(name, url, price, category, country)
+      } else {
+        product.innerHTML = cartUser(name, url, price, category, country)
+      }
 
+      if (role === "admin") {
+        // eliminar
+        product
+          .querySelector(".btn-eliminar")
+          .addEventListener("click", async () => {
+            const confirmar = confirm(
+              `¿Estas seguro de que quieres eliminar a ${name}?`,
+            );
+            if (confirmar) {
+              const confirmar2 = confirm(`¿Seguro? Sera irreversible`);
+              if (confirmar2) {
+                try {
+                  const response = await fetch(
+                    `http://localhost:3000/productos/${id}`,
+                    { method: "DELETE" },
+                  );
+                  if (response.ok) {
+                    product.remove();
+                    alert("Se elimino correctamente");
+                  }
+                } catch (error) {
+                  console.error(error);
+                }
+              }
+            }
+          });
+
+        // editar
+        product.querySelector(".btn-editar").addEventListener("click", () => {
+          document.getElementById("formulario").classList.remove("hidden");
+          document.getElementById("url").value = url;
+          document.getElementById("name").value = name;
+          document.getElementById("category").value = category;
+          document.getElementById("price").value = price;
+          document.getElementById("country").value = country;
+
+          const btnCreate = document.getElementById("create");
+          if (btnCreate) {
+            btnCreate.textContent = "Actualizar";
+            btnCreate.setAttribute("data-editing", id);
+          }
+        });
+      }
       // agregar al carrito
       product.querySelector(".btn-agregar").addEventListener("click", () => {
         agregarAlCarrito({ id, nombre: name, precio: Number(price), url });
-      });
-
-      // eliminar
-      product
-        .querySelector(".btn-eliminar")
-        .addEventListener("click", async () => {
-          const confirmar = confirm(
-            `¿Estas seguro de que quieres eliminar a ${name}?`,
-          );
-          if (confirmar) {
-            const confirmar2 = confirm(`¿Seguro? Sera irreversible`);
-            if (confirmar2) {
-              try {
-                const response = await fetch(
-                  `http://localhost:3000/productos/${id}`,
-                  { method: "DELETE" },
-                );
-                if (response.ok) {
-                  product.remove();
-                  alert("Se elimino correctamente");
-                }
-              } catch (error) {
-                console.error(error);
-              }
-            }
-          }
-        });
-
-      // editar
-      product.querySelector(".btn-editar").addEventListener("click", () => {
-        document.getElementById("formulario").classList.remove("hidden");
-        document.getElementById("url").value = url;
-        document.getElementById("name").value = name;
-        document.getElementById("category").value = category;
-        document.getElementById("price").value = price;
-        document.getElementById("country").value = country;
-
-        const btnCreate = document.getElementById("create");
-        if (btnCreate) {
-          btnCreate.textContent = "Actualizar";
-          btnCreate.setAttribute("data-editing", id);
-        }
       });
 
       dataContainer.appendChild(product);
@@ -150,7 +156,10 @@ export function initHome(username, isAdmin, appContainer) {
   const btnCreate = document.getElementById("create");
   const inputBuscar = document.getElementById("inputB");
   const btnBuscar = document.getElementById("buscar");
-  const btnAdd = document.getElementById("add-button");
+  const btnAdd = document.getElementById("add-button") 
+  if (isAdmin !== "admin") {
+        btnAdd.style.display = "none";
+      }
   const btnCancel = document.getElementById("cancel");
   const contenedorCategorias = document.getElementById("categorias");
 
@@ -200,7 +209,7 @@ export function initHome(username, isAdmin, appContainer) {
     });
 
   // render inicial de productos
-  renderProducts();
+  renderProducts(isAdmin);
 }
 
 export default { initHome, renderProducts };

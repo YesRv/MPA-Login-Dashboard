@@ -1,0 +1,338 @@
+/* ========== CARRITO ========== */
+
+.carrito {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color1);
+    padding: 12px;
+    gap: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.carrito-box {
+    background-color: var(--color6);
+    border-radius: 18px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.carrito-box-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.carrito-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.carrito-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: 'Bankai';
+    margin: 0;
+}
+
+.carrito-header-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--color1);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    color: #fff;
+    font-family: 'Bankai';
+}
+
+.carrito-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.carrito-items::-webkit-scrollbar {
+    width: 3px;
+}
+
+.carrito-items::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+
+.carrito-vacio {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-align: center;
+    margin-top: 16px;
+    font-family: 'Bankai';
+}
+
+.carrito-box-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.carrito-capsula {
+    border-radius: 50px;
+    padding: 10px 16px;
+    box-sizing: border-box;
+}
+
+.carrito-capsula-total {
+    background-color: rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carrito-total-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color1);
+    font-family: 'Bankai';
+}
+
+.carrito-total-valor {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color1);
+    font-family: 'Bankai';
+}
+
+/* Cápsula confirmar */
+.btn-checkout {
+    width: 100%;
+    background-color: #ffffff !important;
+    color: var(--color1) !important;
+    border: none !important;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Bankai';
+    text-align: center;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-checkout:hover {
+    background-color: var(--fnd3) !important;
+    transform: translateY(-1px);
+}
+
+.btn-checkout:active {
+    transform: scale(0.98);
+}
+
+/* Items del carrito */
+.carrito-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.92);
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.carrito-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.carrito-item-img-wrap {
+    width: 100%;
+    height: 90px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--fnd3);
+}
+
+.carrito-item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carrito-item-img-fallback {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.carrito-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.carrito-item-nombre {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--txt1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.carrito-item-precio-unit {
+    font-size: 0.80rem;
+    color: var(--txt3);
+}
+
+.carrito-item-controles {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+}
+
+.carrito-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+
+.carrito-item-controles .btn-menos,
+.carrito-item-controles .btn-mas {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1px solid var(--fnd3);
+    background-color: var(--fnd2);
+    color: var(--color1);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background 0.15s;
+    padding: 0;
+}
+
+.carrito-item-controles .btn-menos:hover,
+.carrito-item-controles .btn-mas:hover {
+    background-color: var(--color1);
+    color: white;
+    border-color: var(--color1);
+}
+
+.carrito-item-cantidad {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--txt1);
+    min-width: 14px;
+    text-align: center;
+}
+
+.carrito-item-subtotal {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--color1);
+    border-radius: 20px;
+    background-color: var(--color6);
+    text-align: right;
+    padding: 4px 14px;
+    margin-top: 6px;
+    display: inline-flex;
+    align-self: flex-end;
+}
+
+.btn-quitar {
+    background-color: var(--color6);
+    border-radius: 20px;
+    padding: 4px 12px;
+    width: 30px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: opacity 0.15s, transform 0.15s;
+    padding: 0;
+    line-height: 1;
+}
+
+.btn-quitar:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Botón flotante FAB (mobile) */
+#carrito-fab {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    right: 260px;
+    z-index: 150;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--color1);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(73, 28, 176, 0.45);
+    font-size: 1.4rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#carrito-fab-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--color4);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    box-sizing: border-box;
+    font-family: 'Bankai';
+}
+
+#carrito-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#carrito-overlay.visible {
+    opacity: 1;
+}
+
+#btn-cerrar-carrito {
+    display: none;
+}
