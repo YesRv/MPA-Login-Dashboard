@@ -23,6 +23,23 @@ export function loginView() {
             <label for="passwordNew">Password</label>
             <input type="password" id="passwordNew" placeholder="••••••••" >
 
+            <label for="password">Confirm Password</label>
+            <input type="password" id="passwordConfirmation" placeholder="••••••••" >
+
+            <div class="col-span-1 space-y-2" >
+              <label for="rol">Choose a rol profile</label>
+                  <select id="profileRol"
+                  name="profileRol"
+                  id="rol"
+                  class="w-full border border-gray-200 rounded-lg p-2"
+                  required
+                  >
+                      <option value="white">Choose...</option>
+                      <option value="user" >USER</option>
+                      <option value="blue" >ADMIN</option>
+                  </select> 
+            </div>
+
             <button id="adduser" type="submit">Sign Up</button>
 
             <div class="form-footer-New">

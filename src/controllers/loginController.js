@@ -10,13 +10,17 @@ export async function loginController(appContainer) {
   const formLogin = document.getElementById("login-form");
 
   // inputs
+  // LOGIN INPUTS 
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
 
+  // CREATE INPUTS
   const usernameNewInput = document.getElementById("usernameNew");
   const emailNewInput = document.getElementById("useremail");
   const passwordNewInput = document.getElementById("passwordNew");
+  const passwordConfirmationInput = document.getElementById("passwordConfirmation");
   addLoginEventsListeners();
+
   // CUENTA ADMINISTRATIVA
 
   const userAdm = "Kurohana-Adm";
@@ -83,16 +87,79 @@ export async function loginController(appContainer) {
     const userData = { username, email, password };
 
     if (!username || !password || !email) {
-      messageLoginNew.innerText = "Please fill in all fields";
+      messageLoginNew.innerText = "Please fill in all the fields";
       return;
     }
+    const passwordConfirmation = passwordConfirmationInput.value.trim();
+
+    if (password !== passwordConfirmation) {
+      alert("Passwords do not match");
+      formNew.reset();
+      return;
+    }
+
     try {
-      let response;
-      response = await fetch("http://localhost:3000/users", {
+
+      // If the user fill all the fields the new user will be save on the json server
+      // 1. GET all users from json-server
+      const usersResponse = await fetch("http://localhost:3000/users");
+      const users = await usersResponse.json();
+
+      // 2. Validate duplicated username
+      const usernameExists = users.some(
+        (user) => user.username === username
+      );
+
+      if (usernameExists) {
+        messageLoginNew.innerText = "This username is already taken";
+        return;
+      }
+
+      // 3. Validate duplicated email
+      const emailExists = users.some(
+        (user) => user.email === email
+      );
+
+      if (emailExists) {
+        messageLoginNew.innerText = "This email is already registered";
+        return;
+      }
+
+      // 4. Create new user object
+      const userData = {
+        username,
+        email,
+        password,
+      };
+
+      // 5. Save user
+      const response = await fetch("http://localhost:3000/users", {
         method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
         body: JSON.stringify(userData),
       });
-      messageLoginNew.innerText = `The account was created successfully.`;
+
+      if (response.ok) {
+
+        messageLoginNew.innerText =
+          "The account was created successfully";
+
+        const loginUser = document.getElementById("login-user");
+        const loginNew = document.getElementById("login-new");
+
+        loginUser.classList.remove("hidden");
+        loginNew.classList.add("hidden");
+
+        formNew.reset();
+
+      } else {
+        messageLoginNew.innerText = "Error creating account";
+      }
+
     } catch {
       alert("Error Register");
     }
