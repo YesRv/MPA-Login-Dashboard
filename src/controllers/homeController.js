@@ -4,6 +4,10 @@ import { cartAdmnistrator } from "../components/cartAdm.js";
 import { cartUser } from "../components/cartUser.js";
 import sidebar from "../components/sidebar.js";
 import sidebarController from "./sidebarController.js";
+import { paginate } from "../components/pagination.js";
+
+let currentPage = 1;
+const itemsPerPage = 12;
 
 function resetForm(btnCreate) {
   const form = document.getElementById("formData");
@@ -30,20 +34,27 @@ function aplicarFiltro(categoria) {
 }
 
 export async function renderProducts(role) {
-  console.log("Renderizando productos")
+  console.log("Renderizando productos");
   const dataContainer = document.getElementById("data-container");
   if (!dataContainer) return;
   dataContainer.innerHTML = "";
   try {
-    const data = await fetchApiData("/productos")
-    data.forEach((element) => {
+    const data = await fetchApiData("/productos");
+    const paginateProducts = paginate(data, currentPage, itemsPerPage);
+    paginateProducts.forEach((element) => {
       const { id, url, name, category, price, country } = element;
       const product = document.createElement("div");
       // product.innerHTML = cartAdmnistrator(name, url, price, category, country);
       if (role === "admin") {
-        product.innerHTML = cartAdmnistrator(name, url, price, category, country)
+        product.innerHTML = cartAdmnistrator(
+          name,
+          url,
+          price,
+          category,
+          country,
+        );
       } else {
-        product.innerHTML = cartUser(name, url, price, category, country)
+        product.innerHTML = cartUser(name, url, price, category, country);
       }
 
       if (role === "admin") {
@@ -55,7 +66,9 @@ export async function renderProducts(role) {
               `Are you sure you want to delete ${name}?`,
             );
             if (confirmar) {
-              const confirmar2 = confirm(`Are you sure? It will be irreversible`);
+              const confirmar2 = confirm(
+                `Are you sure? It will be irreversible`,
+              );
               if (confirmar2) {
                 try {
                   const response = await fetch(
@@ -155,10 +168,12 @@ export function initHome(username, isAdmin, appContainer) {
   const btnCreate = document.getElementById("create");
   const inputBuscar = document.getElementById("inputB");
   const btnBuscar = document.getElementById("buscar");
-  const btnAdd = document.getElementById("add-button") 
+  const btnNext = document.getElementById("next-page");
+  const btnPrev = document.getElementById("prev-page");
+  const btnAdd = document.getElementById("add-button");
   if (isAdmin !== "admin") {
-        btnAdd.style.display = "none";
-      }
+    btnAdd.style.display = "none";
+  }
   const btnCancel = document.getElementById("cancel");
   const contenedorCategorias = document.getElementById("categorias");
 
@@ -196,13 +211,33 @@ export function initHome(username, isAdmin, appContainer) {
       });
     });
 
-  if (btnCreate) btnCreate.addEventListener("click", (e) => { e.preventDefault(); sendData(); });
+  if (btnNext)
+    btnNext.addEventListener("click", () => {
+      currentPage++;
+      renderProducts(isAdmin);
+    });
+
+  if (btnPrev)
+    btnPrev.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderProducts(isAdmin);
+      }
+    });
+
+  if (btnCreate)
+    btnCreate.addEventListener("click", (e) => {
+      e.preventDefault();
+      sendData();
+    });
 
   if (contenedorCategorias)
     contenedorCategorias.addEventListener("click", (event) => {
       const btn = event.target.closest("button.cat-btn");
       if (!btn) return;
-      document.querySelectorAll(".cat-btn").forEach((b) => b.classList.remove("active-cat"));
+      document
+        .querySelectorAll(".cat-btn")
+        .forEach((b) => b.classList.remove("active-cat"));
       btn.classList.add("active-cat");
       aplicarFiltro(btn.id.toLowerCase());
     });

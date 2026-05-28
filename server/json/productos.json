@@ -521,7 +521,6 @@
       "id": "edYEf8qP4LQ"
     }
   ],
-  
   "users": [
     {
       "username": "Kurohana-Adm",
@@ -554,8 +553,60 @@
       "id": "Vplf4TAJXYg"
     }
   ],
-
-  "orders": [],
-  
+  "coupons": [
+    {
+      "name": "ejemplito 4",
+      "discount": "40",
+      "description": "Se aplica a compras mayor de 800 dolares",
+      "id": "qKyqeYyR4IQ"
+    }
+  ],
+  "orders": [
+    {
+      "username": "maria520",
+      "items": [
+        {
+          "id": "xkX0vy8P4_8",
+          "nombre": "Takoyaki",
+          "precio": 25,
+          "cantidad": 5
+        }
+      ],
+      "total": "125.00",
+      "metodoPago": "transfer",
+      "fecha": "2026-05-28T16:53:18.055Z",
+      "id": "wm9fodUf_TM"
+    },
+    {
+      "username": "maria520",
+      "items": [
+        {
+          "id": "ImdynvfbCug",
+          "nombre": "Tempura de vegetales",
+          "precio": 25,
+          "cantidad": 4
+        }
+      ],
+      "total": "100.00",
+      "metodoPago": "cash",
+      "fecha": "2026-05-28T16:53:26.510Z",
+      "id": "p9xciqrejK4"
+    },
+    {
+      "username": "lili520",
+      "items": [
+        {
+          "id": "XjU3D77nS7M",
+          "nombre": "Gyoza",
+          "precio": 25,
+          "cantidad": 1
+        }
+      ],
+      "total": "25.00",
+      "metodoPago": "transfer",
+      "fecha": "2026-05-28T16:55:06.107Z",
+      "id": "CXLFzO0n2UA"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
