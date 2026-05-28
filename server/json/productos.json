@@ -177,7 +177,7 @@
       "id": "FuH9rXcgXAo"
     },
     {
-      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU_k-CWFwET2bWrJEplIDQwdi0qIqo4EMjaA&s",
+      "url": "https://cdn.colombia.com/gastronomia/2011/07/26/dumplings-1492.jpg",
       "name": "Dumplings",
       "category": "appetizers",
       "price": "25",
@@ -524,7 +524,8 @@
   "users": [
     {
       "username": "Kurohana-Adm",
-      "passward": "123456",
+      "email": "undefined",
+      "password": "123456",
       "id": "imSwzcHFA2U"
     },
     {
@@ -546,7 +547,26 @@
       "id": "MaV-sxlR89U"
     }
   ],
-  
+  "coupons": [
+    {
+      "name": "Ejemplo 1",
+      "discount": 10,
+      "description": "Off 100 dolars",
+      "id": "1"
+    },
+    {
+      "name": "Ejemplo 2",
+      "discount": 10,
+      "description": "Off 100 dolars",
+      "id": "2"
+    },
+    {
+      "name": "Descuentico",
+      "discount": "50",
+      "description": "Descuento pa todo el mundo",
+      "id": "wrXJnJVbJkg"
+    }
+  ],
   "orders": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

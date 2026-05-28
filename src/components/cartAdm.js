@@ -13,9 +13,6 @@ export function cartAdmnistrator(name, url, price, category, country) {
       <span class="country">${country}</span>
     </figure>
     <section id="actions">
-    <div>
-        <button class="btn-agregar">Add</button>
-      </div>
       <div>
         <button class="btn-editar">Edit</button>
       </div>
@@ -23,5 +20,5 @@ export function cartAdmnistrator(name, url, price, category, country) {
       <button class="btn-eliminar">Delete</button>
       </div>
       </section>
-      </div>;
+      </div>
 `}

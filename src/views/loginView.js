@@ -8,7 +8,7 @@ export function loginView() {
     <br>
     <div id="welcome" class="welcome">
         <h2>Welcome Back!</h2> <p class="text-welcome">Enter personal</p>
-        <button id="sign-in-button">Sign In</button>
+        <button id="sign-in-button">Login</button>
         <button id="sign-up-button">Sign Up</button>
     </div>
 
