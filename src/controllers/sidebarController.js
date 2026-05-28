@@ -20,8 +20,7 @@ export default function sidebarController(appContainer) {
         const settingsId = "settings-modal";
         const existing = document.getElementById(`${settingsId}-overlay`);
         if (existing) existing.remove();
-
-        const settingsContent = settingView();
+        const settingsContent = settingView();        
 
         appContainer.insertAdjacentHTML("beforeend", modalTemplate(settingsId, "Settings", settingsContent));
         initModal(settingsId);
@@ -88,8 +87,19 @@ export default function sidebarController(appContainer) {
 
     const btnCoupon = document.getElementById("btn-coupon");
     if (btnCoupon) {
-        btnCoupon.addEventListener("click", () => openSectionModal("coupon-modal", "Coupon", appContainer));
-    }
+    btnCoupon.addEventListener("click", () => {
+        const couponId = "coupon-modal";
+        const existing = document.getElementById(`${couponId}-overlay`);
+        if (existing) existing.remove();
+        const couponContent = couponView();
+
+        // crea el modal
+        appContainer.insertAdjacentHTML("beforeend", modalTemplate(couponId, "Coupons", couponContent));
+        initModal(couponId);
+        openModal(couponId);
+        initCoupon(appContainer);
+    });
+}
 }
 
 function openSectionModal(id, title, container) {

@@ -177,7 +177,7 @@
       "id": "FuH9rXcgXAo"
     },
     {
-      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU_k-CWFwET2bWrJEplIDQwdi0qIqo4EMjaA&s",
+      "url": "https://cdn.colombia.com/gastronomia/2011/07/26/dumplings-1492.jpg",
       "name": "Dumplings",
       "category": "appetizers",
       "price": "25",
@@ -521,10 +521,12 @@
       "id": "edYEf8qP4LQ"
     }
   ],
+  
   "users": [
     {
       "username": "Kurohana-Adm",
-      "passward": "123456",
+      "email": "undefined",
+      "password": "123456",
       "id": "imSwzcHFA2U"
     },
     {
@@ -552,88 +554,6 @@
       "id": "Vplf4TAJXYg"
     }
   ],
-  "orders": [
-    {
-      "username": "Carmuand",
-      "items": [
-        {
-          "id": "XjU3D77nS7M",
-          "nombre": "Gyoza",
-          "precio": 25,
-          "cantidad": 1
-        },
-        {
-          "id": "nysriy1MWGk",
-          "nombre": "Ramen",
-          "precio": 55,
-          "cantidad": 1
-        },
-        {
-          "id": "aJbZfMMsTjc",
-          "nombre": "Mochi",
-          "precio": 32,
-          "cantidad": 1
-        },
-        {
-          "id": "XGCaEA15unM",
-          "nombre": "Sake",
-          "precio": 16,
-          "cantidad": 1
-        }
-      ],
-      "total": "128.00",
-      "metodoPago": "cash",
-      "fecha": "2026-05-28T01:28:55.285Z",
-      "id": "vl0V-NAGrN8"
-    },
-    {
-      "username": "Carmuand",
-      "items": [
-        {
-          "id": "XjU3D77nS7M",
-          "nombre": "Gyoza",
-          "precio": 25,
-          "cantidad": 1
-        },
-        {
-          "id": "nysriy1MWGk",
-          "nombre": "Ramen",
-          "precio": 55,
-          "cantidad": 1
-        },
-        {
-          "id": "aJbZfMMsTjc",
-          "nombre": "Mochi",
-          "precio": 32,
-          "cantidad": 1
-        },
-        {
-          "id": "XGCaEA15unM",
-          "nombre": "Sake",
-          "precio": 16,
-          "cantidad": 1
-        }
-      ],
-      "total": "128.00",
-      "metodoPago": "transfer",
-      "fecha": "2026-05-28T02:18:56.552Z",
-      "id": "e_3Ywk5FPV4"
-    },
-    {
-      "username": "Carmuand",
-      "items": [
-        {
-          "id": "XjU3D77nS7M",
-          "nombre": "Gyoza",
-          "precio": 25,
-          "cantidad": 6
-        }
-      ],
-      "total": "150.00",
-      "metodoPago": "transfer",
-      "fecha": "2026-05-28T02:35:00.226Z",
-      "id": "gEsg48FpdrU"
-    }
-  ],
+  "orders": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
