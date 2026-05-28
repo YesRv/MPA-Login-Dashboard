@@ -552,6 +552,88 @@
       "id": "Vplf4TAJXYg"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "username": "Carmuand",
+      "items": [
+        {
+          "id": "XjU3D77nS7M",
+          "nombre": "Gyoza",
+          "precio": 25,
+          "cantidad": 1
+        },
+        {
+          "id": "nysriy1MWGk",
+          "nombre": "Ramen",
+          "precio": 55,
+          "cantidad": 1
+        },
+        {
+          "id": "aJbZfMMsTjc",
+          "nombre": "Mochi",
+          "precio": 32,
+          "cantidad": 1
+        },
+        {
+          "id": "XGCaEA15unM",
+          "nombre": "Sake",
+          "precio": 16,
+          "cantidad": 1
+        }
+      ],
+      "total": "128.00",
+      "metodoPago": "cash",
+      "fecha": "2026-05-28T01:28:55.285Z",
+      "id": "vl0V-NAGrN8"
+    },
+    {
+      "username": "Carmuand",
+      "items": [
+        {
+          "id": "XjU3D77nS7M",
+          "nombre": "Gyoza",
+          "precio": 25,
+          "cantidad": 1
+        },
+        {
+          "id": "nysriy1MWGk",
+          "nombre": "Ramen",
+          "precio": 55,
+          "cantidad": 1
+        },
+        {
+          "id": "aJbZfMMsTjc",
+          "nombre": "Mochi",
+          "precio": 32,
+          "cantidad": 1
+        },
+        {
+          "id": "XGCaEA15unM",
+          "nombre": "Sake",
+          "precio": 16,
+          "cantidad": 1
+        }
+      ],
+      "total": "128.00",
+      "metodoPago": "transfer",
+      "fecha": "2026-05-28T02:18:56.552Z",
+      "id": "e_3Ywk5FPV4"
+    },
+    {
+      "username": "Carmuand",
+      "items": [
+        {
+          "id": "XjU3D77nS7M",
+          "nombre": "Gyoza",
+          "precio": 25,
+          "cantidad": 6
+        }
+      ],
+      "total": "150.00",
+      "metodoPago": "transfer",
+      "fecha": "2026-05-28T02:35:00.226Z",
+      "id": "gEsg48FpdrU"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

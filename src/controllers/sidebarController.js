@@ -1,7 +1,9 @@
 import { loginView } from "../views/loginView.js"
 import { loginController } from "./loginController.js"
 import { modalTemplate, openModal, closeModal, initModal } from "../components/modal.js"
-import { settingView } from "../views/settingView.js"
+import { settingView } from "../views/settingView.js";
+import { orderView } from "../views/orderView.js";
+import { initOrder } from "./orderController.js";
 
 export default function sidebarController(appContainer) {
     const exitButton = document.getElementById("exit-btn")
@@ -69,7 +71,14 @@ export default function sidebarController(appContainer) {
 
     const btnOrder = document.getElementById("btn-order");
     if (btnOrder) {
-        btnOrder.addEventListener("click", () => openSectionModal("order-modal", "Order", appContainer));
+        btnOrder.addEventListener("click", () => {
+            const existing = document.getElementById("order-modal-overlay");
+            if (existing) existing.remove();
+            appContainer.insertAdjacentHTML("beforeend", modalTemplate("order-modal", "My Orders", orderView()));
+            initModal("order-modal")
+            initOrder(appContainer)
+            openModal("order-modal");
+        });
     }
 
     const btnFavorite = document.getElementById("btn-favorite");

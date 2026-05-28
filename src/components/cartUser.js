@@ -17,5 +17,5 @@ export function cartUser(name, url, price, category, country) {
           <button class="btn-agregar">+</button>
         </div>
       </section>
-    </div>;
+    </div>
 `}

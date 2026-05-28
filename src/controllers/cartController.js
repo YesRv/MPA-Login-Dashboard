@@ -105,12 +105,64 @@ function ConfirmarPedido() {
   if (carrito.length === 0) {
     return;
   }
+  abrirModal();
+}
 
-  const total = document.getElementById("carrito-total").textContent;
-  alert(`Pedido confirmado. Total: ${total}`);
+function abrirModal() {
+  const modalOverlay = document.getElementById("modal-overlay");
+  const modalItems = document.getElementById("modal-items");
+  const modalTotal = document.getElementById("modal-total");
 
-  carrito = [];
-  renderizarCarrito();
+  modalItems.innerHTML = "";
+  
+  carrito.forEach((item) => {
+    const div = document.createElement("div");
+    div.innerHTML = `<span>${item.nombre}</span> x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}`;
+    modalItems.appendChild(div);
+  });
+
+  const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  modalTotal.textContent = `$${total.toFixed(2)}`;
+
+  modalOverlay.classList.remove("hidden");
+}
+
+function cerrarModal() {
+  const modalOverlay = document.getElementById("modal-overlay");
+  modalOverlay.classList.add("hidden");
+}
+
+async function enviarOrden(metodoPago) {
+  const username = localStorage.getItem("username");
+  const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+
+  const orden = {
+    username: username,
+    items: carrito.map((item) => ({
+      id: item.id,
+      nombre: item.nombre,
+      precio: item.precio,
+      cantidad: item.cantidad
+    })),
+    total: total.toFixed(2),
+    metodoPago: metodoPago,
+    fecha: new Date().toISOString()
+  };
+
+  const response = await fetch("http://localhost:3000/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(orden)
+  });
+
+  if (response.ok) {
+    alert("Order placed successfully!");
+    carrito = [];
+    renderizarCarrito();
+    cerrarModal();
+  } else {
+    alert("Error placing order");
+  }
 }
 
 function actualizarBadge() {
@@ -157,6 +209,28 @@ export function initCarrito() {
   const btnCheckout = document.getElementById("btn-checkout");
   if (btnCheckout) {
     btnCheckout.addEventListener("click", ConfirmarPedido);
+  }
+
+  const btnCloseModal = document.getElementById("btn-cancel-modal");
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener("click", cerrarModal);
+  }
+
+  const btnXModal = document.getElementById("btn-close-modal");
+  if (btnXModal) {
+    btnXModal.addEventListener("click", cerrarModal);
+  }
+
+  const btnPay = document.getElementById("btn-pay");
+  if (btnPay) {
+    btnPay.addEventListener("click", async () => {
+      const paymentSelected = document.querySelector("input[name='payment']:checked");
+      if (!paymentSelected) {
+        alert("Please select a payment method");
+        return;
+      }
+      await enviarOrden(paymentSelected.value);
+    });
   }
 
   // FAB: abrir carrito en móvil

@@ -23,5 +23,5 @@ export function cartAdmnistrator(name, url, price, category, country) {
       <button class="btn-eliminar">Delete</button>
       </div>
       </section>
-      </div>;
+      </div>
 `}
