@@ -4,6 +4,8 @@ import { modalTemplate, openModal, closeModal, initModal } from "../components/m
 import { settingView } from "../views/settingView.js";
 import { orderView } from "../views/orderView.js";
 import { initOrder } from "./orderController.js";
+import { couponView } from "../views/couponView.js";
+import { initCoupon } from "../controllers/couponController.js";
 
 export default function sidebarController(appContainer) {
     const exitButton = document.getElementById("exit-btn")

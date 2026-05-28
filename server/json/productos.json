@@ -521,7 +521,6 @@
       "id": "edYEf8qP4LQ"
     }
   ],
-  
   "users": [
     {
       "username": "Kurohana-Adm",
@@ -554,6 +553,61 @@
       "id": "Vplf4TAJXYg"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "nombre": "ÒRD-001",
+      "username": "Carmuand",
+      "items": [
+        {
+          "id": "MxW1xl_bO0A",
+          "nombre": "Nigiri",
+          "precio": 25,
+          "cantidad": 1
+        },
+        {
+          "id": "FuH9rXcgXAo",
+          "nombre": "Japanese curry",
+          "precio": 55,
+          "cantidad": 1
+        },
+        {
+          "id": "ucwbhU7pIqI",
+          "nombre": "Sweet Tofu Pudding",
+          "precio": 24,
+          "cantidad": 1
+        },
+        {
+          "id": "zYvxxKSmKTE",
+          "nombre": "Soju ",
+          "precio": 22,
+          "cantidad": 1
+        }
+      ],
+      "total": "119.70",
+      "metodoPago": "transfer",
+      "fecha": "2026-05-28T17:45:41.897Z",
+      "id": "wRfK3Rhs3ME"
+    }
+  ],
+  "coupons": [
+    {
+      "name": "Discount5",
+      "discount": "5",
+      "description": "5% off on orders over $100",
+      "id": "thy0BbNc55o"
+    },
+    {
+      "name": "Discount10",
+      "discount": "10",
+      "description": "10% off on orders over $200",
+      "id": "JXCCZl6Koq8"
+    },
+    {
+      "name": "Discount15",
+      "discount": "15",
+      "description": "15% off on orders over $300",
+      "id": "LOH9SiLSsRg"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

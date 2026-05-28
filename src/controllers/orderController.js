@@ -15,7 +15,7 @@ export async function initOrder(appContainer) {
     userOrders.forEach((order) => {
         const div = document.createElement("div");
         div.innerHTML = `
-        <h3>Order #${order.id}</h3>
+        <h3>Order ${order.nombre || "#" + order.id}</h3>
             <p>Date: ${new Date(order.fecha).toLocaleDateString()}</p>
             <p>Payment: ${order.metodoPago}</p>
             <p>Total: $${order.total}</p>

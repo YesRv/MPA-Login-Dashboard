@@ -158,7 +158,18 @@ export function initHome(username, isAdmin, appContainer) {
   const btnAdd = document.getElementById("add-button") 
   if (isAdmin !== "admin") {
         btnAdd.style.display = "none";
-      }
+  }
+  if (isAdmin === "admin") {
+    const carritoEl = document.getElementById("carrito");
+    const carritoFab = document.getElementById("carrito-fab");
+    const carritoOverlay = document.getElementById("carrito-overlay");
+    if (carritoEl) carritoEl.style.display = "none";
+    if (carritoFab) carritoFab.style.display = "none";
+    if (carritoOverlay) carritoOverlay.style.display = "none";
+
+    const appEl = document.getElementById("app");
+    if (appEl) appEl.classList.add("sin-carrito");
+  }
   const btnCancel = document.getElementById("cancel");
   const contenedorCategorias = document.getElementById("categorias");
 
