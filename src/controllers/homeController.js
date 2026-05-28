@@ -88,6 +88,10 @@ export async function renderProducts(role) {
             btnCreate.setAttribute("data-editing", id);
           }
         });
+      } else {
+        product.querySelector(".btn-agregar").addEventListener("click", () => {
+          agregarAlCarrito({ id, nombre: name, precio: Number(price), url });
+        });
       }
       dataContainer.appendChild(product);
     });
