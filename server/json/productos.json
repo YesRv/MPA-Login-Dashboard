@@ -521,6 +521,7 @@
       "id": "edYEf8qP4LQ"
     }
   ],
+  
   "users": [
     {
       "username": "Kurohana-Adm",
@@ -545,8 +546,15 @@
       "email": "carlosmu@gmail.com",
       "password": "090501",
       "id": "MaV-sxlR89U"
+    },
+    {
+      "username": "YesVert",
+      "email": "yezvert123@gmail.com",
+      "password": "123456CC",
+      "id": "Vplf4TAJXYg"
     }
   ],
+
   "coupons": [
     {
       "name": "Ejemplo 1",
@@ -567,6 +575,10 @@
       "id": "wrXJnJVbJkg"
     }
   ],
-  "orders": [],
+
+  "orders": [
+
+  ],
+  
   "$schema": "./node_modules/json-server/schema.json"
 }
