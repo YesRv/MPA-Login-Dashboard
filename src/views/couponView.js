@@ -34,6 +34,5 @@ export function couponView(name, description) {
     </button>
     </div>
     </form>
-
     `;
 }

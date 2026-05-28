@@ -146,6 +146,24 @@ return (`
   
       <section id="data-container"></section>
 
+      <div
+        style="
+        display:flex;
+        justify-content:center;
+        gap:12px;
+        margin-top:20px;
+        ">
+
+        <button id="prev-page">
+        ⇐
+        </button>
+
+        <button id="next-page">
+        ⇒
+        </button>
+
+        </div>
+
     </section>
 
     <div id="modal-overlay" class="modal-overlay hidden">

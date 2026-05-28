@@ -5,7 +5,9 @@ import { settingView } from "../views/settingView.js";
 import { orderView } from "../views/orderView.js";
 import { initOrder } from "./orderController.js";
 import { couponView } from "../views/couponView.js";
-import { initCoupon } from "../controllers/couponController.js";
+import { initCoupon } from "./couponController.js";
+import { adminitratorView } from "../views/adminitratorView.js";
+import { initAdministrator } from "./adminController.js";
 
 export default function sidebarController(appContainer) {
     const exitButton = document.getElementById("exit-btn")
@@ -69,7 +71,17 @@ export default function sidebarController(appContainer) {
 
     const btnAdmin = document.getElementById("btn-admin");
     if (btnAdmin) {
-        btnAdmin.addEventListener("click", () => openSectionModal("admin-modal", "Administrator", appContainer));
+        btnAdmin.addEventListener("click", () => {
+            const adminId = "admin-modal";
+            const existing = document.getElementById(`${adminId}-overlay`);
+            if (existing) existing.remove();
+            const adminContent = adminitratorView();
+
+            appContainer.insertAdjacentHTML("beforeend", modalTemplate(adminId, "Administrador", adminContent));
+            initModal(adminId);
+            openModal(adminId);
+            initAdministrator(appContainer);
+        });
     }
 
     const btnOrder = document.getElementById("btn-order");
@@ -84,6 +96,10 @@ export default function sidebarController(appContainer) {
         });
     }
 
+    const btnFavorite = document.getElementById("btn-favorite");
+    if (btnFavorite) {
+        btnFavorite.addEventListener("click", () => openSectionModal("favorite-modal", "Favorite", appContainer));
+    }
 
     const btnCoupon = document.getElementById("btn-coupon");
     if (btnCoupon) {
@@ -99,7 +115,7 @@ export default function sidebarController(appContainer) {
         openModal(couponId);
         initCoupon(appContainer);
     });
-}
+    }   
 }
 
 function openSectionModal(id, title, container) {
