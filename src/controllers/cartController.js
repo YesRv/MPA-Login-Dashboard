@@ -204,6 +204,20 @@ async function enviarOrden(metodoPago) {
 
   if (response.ok) {
     alert("Order placed successfully!");
+    // Actualizar contador de pedidos en cada producto
+    for (const item of carrito) {
+      try {
+        const resP = await fetch(`http://localhost:3000/productos/${item.id}`);
+        const producto = await resP.json();
+        const nuevosPedidos = (producto.pedidos || 0) + item.cantidad;
+        await fetch(`http://localhost:3000/productos/${item.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pedidos: nuevosPedidos })
+        });
+      } catch (e) { console.error('Error actualizando pedidos:', e); }
+    }
+
     carrito = [];
     renderizarCarrito();
     totalConDescuento = null;

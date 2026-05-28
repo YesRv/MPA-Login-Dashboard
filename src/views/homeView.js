@@ -2,10 +2,6 @@ export function homeView() {
 return (`
   <aside class="aside" id="sidebar-container"></aside>
   
-    <main id="app">
-      <section id="shoppingCart"></section>
-    </main>
-  
     <!-- Overlay para cerrar el carrito en móvil -->
     <div id="carrito-overlay"></div>
   
@@ -64,6 +60,12 @@ return (`
           <button id="add-button">Add</button>
         </div>
       </article>
+
+      <!-- Sección Populares -->
+      <section id="populares-section" class="populares-section">
+        <h2 class="populares-titulo">🔥 Populares</h2>
+        <div id="populares-container" class="populares-container"></div>
+      </section>
   
       <article id="categorias" class="categorias">
         <div>
