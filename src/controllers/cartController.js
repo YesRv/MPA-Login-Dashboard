@@ -1,4 +1,5 @@
 let carrito = [];
+let totalConDescuento = [];
 
 export function agregarAlCarrito(producto) {
   const existente = carrito.find((item) => item.id === producto.id);
@@ -53,6 +54,7 @@ function renderizarCarrito() {
   if (carrito.length === 0) {
     if (vacio) vacio.style.display = "block";
     actualizarTotal();
+    actualizarBadge();
     return;
   }
 
@@ -105,12 +107,110 @@ function ConfirmarPedido() {
   if (carrito.length === 0) {
     return;
   }
+  abrirModal();
+}
 
-  const total = document.getElementById("carrito-total").textContent;
-  alert(`Pedido confirmado. Total: ${total}`);
+function abrirModal() {
+  const modalOverlay = document.getElementById("modal-overlay");
+  const modalItems = document.getElementById("modal-items");
+  const modalTotal = document.getElementById("modal-total");
 
-  carrito = [];
-  renderizarCarrito();
+  modalItems.innerHTML = "";
+  
+  carrito.forEach((item) => {
+    const div = document.createElement("div");
+    div.innerHTML = `<span>${item.nombre}</span> x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}`;
+    modalItems.appendChild(div);
+  });
+
+  const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  modalTotal.textContent = `$${total.toFixed(2)}`;
+
+  modalOverlay.classList.remove("hidden");
+}
+
+function cerrarModal() {
+  const modalOverlay = document.getElementById("modal-overlay");
+  modalOverlay.classList.add("hidden");
+}
+
+async function aplicarCupon() {
+  const inputCupon = document.getElementById("input-cuopon");
+  const codigoIngreasado = inputCupon.value.trim().toUpperCase();
+
+  if (!codigoIngreasado) {
+    alert("Please enter a coupon code");
+    return;
+  }
+
+  const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+
+  const response = await fetch("http://localhost:3000/coupons");
+  const coupons = await response.json();
+
+  const cupon = coupons.find(c => c.name.toUpperCase() === codigoIngreasado);
+
+  if (!cupon) {
+    alert("Coupon not found");
+    return;
+  }
+
+  const descuento = Number(cupon.discount);
+
+  if (descuento === 5 && total < 100) {
+    alert("This coupon requires a minimum order of $100");
+  }
+  if (descuento === 10 && total < 200) {
+    alert("This coupon requieres a minimun order of $200");
+    return;
+  }
+  if (descuento === 15 && total < 300) {
+    alert("This coupon requires a minimum order of $300");
+    return;
+  }
+
+  totalConDescuento = total - (total * descuento / 100);
+  document.getElementById("modal-total").textContent = `$${totalConDescuento.toFixed(2)} (${descuento}% off)`;
+  alert(`Coupon applied! ${descuento}% discount`);
+}
+
+async function enviarOrden(metodoPago) {
+  const username = localStorage.getItem("username");
+  const resOrdenes = await fetch("http://localhost:3000/orders");
+  const ordenesExistentes = await resOrdenes.json();
+  const numero = String(ordenesExistentes.length + 1).padStart(3, "0");
+  const nombreOrden = `ÒRD-${numero}`;
+  const total = totalConDescuento !== null ? Number(totalConDescuento) : carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+
+  const orden = {
+    nombre: nombreOrden,
+    username: username,
+    items: carrito.map((item) => ({
+      id: item.id,
+      nombre: item.nombre,
+      precio: item.precio,
+      cantidad: item.cantidad
+    })),
+    total: total.toFixed(2),
+    metodoPago: metodoPago,
+    fecha: new Date().toISOString()
+  };
+
+  const response = await fetch("http://localhost:3000/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(orden)
+  });
+
+  if (response.ok) {
+    alert("Order placed successfully!");
+    carrito = [];
+    renderizarCarrito();
+    totalConDescuento = null;
+    cerrarModal();
+  } else {
+    alert("Error placing order");
+  }
 }
 
 function actualizarBadge() {
@@ -157,6 +257,35 @@ export function initCarrito() {
   const btnCheckout = document.getElementById("btn-checkout");
   if (btnCheckout) {
     btnCheckout.addEventListener("click", ConfirmarPedido);
+  }
+
+  const btnCloseModal = document.getElementById("btn-cancel-modal");
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener("click", cerrarModal);
+  }
+
+  const btnXModal = document.getElementById("btn-close-modal");
+  if (btnXModal) {
+    btnXModal.addEventListener("click", cerrarModal);
+  }
+
+  const btnApplyCoupon = document.getElementById("btn-apply-cuopon");
+  if (btnApplyCoupon) {
+    btnApplyCoupon.addEventListener("click", async () => {
+      await aplicarCupon();
+    });
+  }
+
+  const btnPay = document.getElementById("btn-pay");
+  if (btnPay) {
+    btnPay.addEventListener("click", async () => {
+      const paymentSelected = document.querySelector("input[name='payment']:checked");
+      if (!paymentSelected) {
+        alert("Please select a payment method");
+        return;
+      }
+      await enviarOrden(paymentSelected.value);
+    });
   }
 
   // FAB: abrir carrito en móvil

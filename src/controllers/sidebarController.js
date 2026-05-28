@@ -1,7 +1,11 @@
 import { loginView } from "../views/loginView.js"
 import { loginController } from "./loginController.js"
 import { modalTemplate, openModal, closeModal, initModal } from "../components/modal.js"
-import { settingView } from "../views/settingView.js"
+import { settingView } from "../views/settingView.js";
+import { orderView } from "../views/orderView.js";
+import { initOrder } from "./orderController.js";
+import { couponView } from "../views/couponView.js";
+import { initCoupon } from "../controllers/couponController.js";
 
 export default function sidebarController(appContainer) {
     const exitButton = document.getElementById("exit-btn")
@@ -18,8 +22,7 @@ export default function sidebarController(appContainer) {
         const settingsId = "settings-modal";
         const existing = document.getElementById(`${settingsId}-overlay`);
         if (existing) existing.remove();
-
-        const settingsContent = settingView();
+        const settingsContent = settingView();        
 
         appContainer.insertAdjacentHTML("beforeend", modalTemplate(settingsId, "Settings", settingsContent));
         initModal(settingsId);
@@ -69,7 +72,14 @@ export default function sidebarController(appContainer) {
 
     const btnOrder = document.getElementById("btn-order");
     if (btnOrder) {
-        btnOrder.addEventListener("click", () => openSectionModal("order-modal", "Order", appContainer));
+        btnOrder.addEventListener("click", () => {
+            const existing = document.getElementById("order-modal-overlay");
+            if (existing) existing.remove();
+            appContainer.insertAdjacentHTML("beforeend", modalTemplate("order-modal", "My Orders", orderView()));
+            initModal("order-modal")
+            initOrder(appContainer)
+            openModal("order-modal");
+        });
     }
 
     const btnFavorite = document.getElementById("btn-favorite");
@@ -79,8 +89,19 @@ export default function sidebarController(appContainer) {
 
     const btnCoupon = document.getElementById("btn-coupon");
     if (btnCoupon) {
-        btnCoupon.addEventListener("click", () => openSectionModal("coupon-modal", "Coupon", appContainer));
-    }
+    btnCoupon.addEventListener("click", () => {
+        const couponId = "coupon-modal";
+        const existing = document.getElementById(`${couponId}-overlay`);
+        if (existing) existing.remove();
+        const couponContent = couponView();
+
+        // crea el modal
+        appContainer.insertAdjacentHTML("beforeend", modalTemplate(couponId, "Coupons", couponContent));
+        initModal(couponId);
+        openModal(couponId);
+        initCoupon(appContainer);
+    });
+}
 }
 
 function openSectionModal(id, title, container) {

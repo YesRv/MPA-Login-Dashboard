@@ -6,6 +6,7 @@
 @import url('./login.css');
 @import url('./responsive.css');
 @import url('./modal.css');
+@import url('./modal-order.css');
 
 /* ========== KUROHANA SPA — ESTILOS PRINCIPALES ========== */
 
@@ -52,8 +53,12 @@ body {
 
 #app {
     margin-left: 200px;
-    margin-right: 220px;
+    margin-right: 260px;
     padding: 0px;
+}
+
+#app.sin-carrito{
+    margin-right: 0px;
 }
 
 

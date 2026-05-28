@@ -1,0 +1,141 @@
+#modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+#modal-overlay.hidden {
+  display: none;
+}
+
+#modal-order {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-header-order {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 12px;
+}
+
+.modal-header-order h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.modal-header-order button {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #888;
+  padding: 4px 8px;
+  border-radius: 8px;
+  width: auto;
+}
+
+.modal-header-order button:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+#modal-items div {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+}
+
+#modal-cuopon {
+  display: flex;
+  gap: 8px;
+}
+
+#input-cuopon {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+#btn-apply-cuopon {
+  padding: 8px 16px;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#modal-order p {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+#modal-payment {
+  display: flex;
+  gap: 24px;
+}
+
+#modal-payment label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+#btn-pay {
+  padding: 12px;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+#btn-pay:hover {
+  opacity: 0.85;
+}
+
+#btn-cancel-modal {
+  padding: 12px;
+  background: transparent;
+  color: #7c3aed;
+  border: 2px solid #7c3aed;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+#btn-cancel-modal:hover {
+  background: #7c3aed;
+  color: white;
+}

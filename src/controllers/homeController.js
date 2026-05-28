@@ -52,10 +52,10 @@ export async function renderProducts(role) {
           .querySelector(".btn-eliminar")
           .addEventListener("click", async () => {
             const confirmar = confirm(
-              `¿Estas seguro de que quieres eliminar a ${name}?`,
+              `Are you sure you want to delete ${name}?`,
             );
             if (confirmar) {
-              const confirmar2 = confirm(`¿Seguro? Sera irreversible`);
+              const confirmar2 = confirm(`Are you sure? It will be irreversible`);
               if (confirmar2) {
                 try {
                   const response = await fetch(
@@ -64,7 +64,7 @@ export async function renderProducts(role) {
                   );
                   if (response.ok) {
                     product.remove();
-                    alert("Se elimino correctamente");
+                    alert("It was successfully removed");
                   }
                 } catch (error) {
                   console.error(error);
@@ -84,16 +84,15 @@ export async function renderProducts(role) {
 
           const btnCreate = document.getElementById("create");
           if (btnCreate) {
-            btnCreate.textContent = "Actualizar";
+            btnCreate.textContent = "Update";
             btnCreate.setAttribute("data-editing", id);
           }
         });
+      } else {
+        product.querySelector(".btn-agregar").addEventListener("click", () => {
+          agregarAlCarrito({ id, nombre: name, precio: Number(price), url });
+        });
       }
-      // agregar al carrito
-      product.querySelector(".btn-agregar").addEventListener("click", () => {
-        agregarAlCarrito({ id, nombre: name, precio: Number(price), url });
-      });
-
       dataContainer.appendChild(product);
     });
   } catch (err) {
@@ -159,7 +158,18 @@ export function initHome(username, isAdmin, appContainer) {
   const btnAdd = document.getElementById("add-button") 
   if (isAdmin !== "admin") {
         btnAdd.style.display = "none";
-      }
+  }
+  if (isAdmin === "admin") {
+    const carritoEl = document.getElementById("carrito");
+    const carritoFab = document.getElementById("carrito-fab");
+    const carritoOverlay = document.getElementById("carrito-overlay");
+    if (carritoEl) carritoEl.style.display = "none";
+    if (carritoFab) carritoFab.style.display = "none";
+    if (carritoOverlay) carritoOverlay.style.display = "none";
+
+    const appEl = document.getElementById("app");
+    if (appEl) appEl.classList.add("sin-carrito");
+  }
   const btnCancel = document.getElementById("cancel");
   const contenedorCategorias = document.getElementById("categorias");
 
