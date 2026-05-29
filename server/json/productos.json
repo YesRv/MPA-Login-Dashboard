@@ -526,33 +526,44 @@
       "username": "Kurohana-Adm",
       "email": "undefined",
       "password": "123456",
-      "id": "imSwzcHFA2U"
+      "id": "imSwzcHFA2U",
+      "role": "admin"
     },
     {
       "username": "maria520",
       "email": "maria@gmail.com",
       "password": "123",
-      "id": "nUAhW6YXV0k"
+      "id": "nUAhW6YXV0k",
+      "role": "user"
     },
     {
       "username": "Melissa",
       "email": "melissagarridos@gmail.com",
       "password": "Melissa123456",
-      "id": "9_2azemYMK0"
+      "id": "9_2azemYMK0",
+      "role": "user"
     },
     {
       "username": "Carmuand",
       "email": "carlosmu@gmail.com",
       "password": "090501",
-      "id": "MaV-sxlR89U"
+      "id": "MaV-sxlR89U",
+      "role": "admin"
     },
     {
       "username": "YesVert",
       "email": "yezvert123@gmail.com",
       "password": "123456CC",
-      "id": "Vplf4TAJXYg"
+      "id": "Vplf4TAJXYg",
+      "role": "user"
+    },
+    {
+      "username": "lili",
+      "email": "lili@gmail.com",
+      "password": "123",
+      "id": "Brrh4b53734",
+      "role": "user"
     }
-    
   ],
   "orders": [
     {

@@ -1,4 +1,4 @@
-export function cardUserA(username, email, id) {
+export function cardUserA(username, email, id, role) {
     return `
     <div class="user-card"
     style="
@@ -14,6 +14,7 @@ export function cardUserA(username, email, id) {
         <article>
             <p class="username">Username: ${username}</p>
             <p class="email">Email: ${email}</p>
+            <p class="role">Role: ${role}</p>
         </article>
 
         <button 
@@ -26,6 +27,9 @@ export function cardUserA(username, email, id) {
         font-size:1rem;
         ">
         🗑
+        </button>
+        <button class="btn-role-user">
+        👑
         </button>
 
     </div>

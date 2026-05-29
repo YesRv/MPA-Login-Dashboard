@@ -10,7 +10,7 @@ export async function loginController(appContainer) {
   const formLogin = document.getElementById("login-form");
 
   // inputs
-  // LOGIN INPUTS 
+  // LOGIN INPUTS
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
 
@@ -18,7 +18,9 @@ export async function loginController(appContainer) {
   const usernameNewInput = document.getElementById("usernameNew");
   const emailNewInput = document.getElementById("useremail");
   const passwordNewInput = document.getElementById("passwordNew");
-  const passwordConfirmationInput = document.getElementById("passwordConfirmation");
+  const passwordConfirmationInput = document.getElementById(
+    "passwordConfirmation",
+  );
   addLoginEventsListeners();
 
   // CUENTA ADMINISTRATIVA
@@ -53,26 +55,40 @@ export async function loginController(appContainer) {
       }
 
       // validar que el men exista
-      const userExists = data.some(
-        (u) => u.username === usernameValue && u.password === passwordValue
+      const userExists = data.find(
+        (u) => u.username === usernameValue && u.password === passwordValue,
       );
 
       if (userExists) {
         messageLoginUser.textContent = "Welcome to Kurohana";
+
         localStorage.setItem("auth", "true");
-        localStorage.setItem("role", "user");
+
+        // VALIDAR SI ES ADMIN
+        if (userExists.role === "admin") {
+          localStorage.setItem("role", "admin");
+        } else {
+          localStorage.setItem("role", "user");
+        }
+
         localStorage.setItem("username", usernameValue);
+
         if (appContainer) {
           appContainer.innerHTML = homeView();
-          initHome(usernameValue, "user", appContainer);
+
+          initHome(
+            usernameValue,
+            userExists.role === "admin" ? "admin" : "user",
+            appContainer,
+          );
         }
+
         return true;
       }
-
       messageLoginUser.textContent = "Invalid username or password";
       return false;
     } catch {
-      alert("Connection error — make sure JSON Server is running");
+      alert("Connection error — make sure JSON Server is running please");
     }
   });
   // CREAR USUARIO
@@ -99,16 +115,13 @@ export async function loginController(appContainer) {
     }
 
     try {
-
       // If the user fill all the fields the new user will be save on the json server
       // 1. GET all users from json-server
       const usersResponse = await fetch("http://localhost:3000/users");
       const users = await usersResponse.json();
 
       // 2. Validate duplicated username
-      const usernameExists = users.some(
-        (user) => user.username === username
-      );
+      const usernameExists = users.some((user) => user.username === username);
 
       if (usernameExists) {
         messageLoginNew.innerText = "This username is already taken";
@@ -116,9 +129,7 @@ export async function loginController(appContainer) {
       }
 
       // 3. Validate duplicated email
-      const emailExists = users.some(
-        (user) => user.email === email
-      );
+      const emailExists = users.some((user) => user.email === email);
 
       if (emailExists) {
         messageLoginNew.innerText = "This email is already registered";
@@ -144,9 +155,7 @@ export async function loginController(appContainer) {
       });
 
       if (response.ok) {
-
-        messageLoginNew.innerText =
-          "The account was created successfully";
+        messageLoginNew.innerText = "The account was created successfully";
 
         const loginUser = document.getElementById("login-user");
         const loginNew = document.getElementById("login-new");
@@ -155,11 +164,9 @@ export async function loginController(appContainer) {
         loginNew.classList.add("hidden");
 
         formNew.reset();
-
       } else {
         messageLoginNew.innerText = "Error creating account";
       }
-
     } catch {
       alert("Error Register");
     }

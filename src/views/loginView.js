@@ -43,7 +43,7 @@ export function loginView() {
             <button id="adduser" type="submit">Sign Up</button>
 
             <div class="form-footer-New">
-                <p>Do you have an account? <span id="to-login" style="cursor:pointer; color:blue;">Sign In</span></p>
+                <p>Do you have an account? <span id="to-login" style="cursor:pointer; color:blue;">Login</span></p>
             </div>
 
             <p id="message-login-new"></p>
@@ -58,7 +58,7 @@ export function loginView() {
             <label for="password">Password</label>
             <input type="password" id="password" placeholder="••••••••" >
 
-            <button type="submit">Sign In</button>
+            <button type="submit">Login</button>
 
             <div class="form-footer">
                 <p>Don't you have an account? <span id="to-register" style="cursor:pointer; color:blue;">Sign Up</span></p>

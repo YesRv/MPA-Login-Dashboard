@@ -7,7 +7,8 @@ import sidebarController from "./sidebarController.js";
 import { paginate } from "../components/pagination.js";
 
 let currentPage = 1;
-const itemsPerPage = 12;
+let itemsPerPage = 12;
+let filteredProducts = [];
 
 function resetForm(btnCreate) {
   const form = document.getElementById("formData");
@@ -18,33 +19,41 @@ function resetForm(btnCreate) {
   }
 }
 
-function aplicarFiltro(categoria) {
-  const cards = document.querySelectorAll("#data-container > div");
-  cards.forEach((card) => {
-    if (categoria === "home") {
-      card.style.display = "block";
-      return;
-    }
-    const categoryElement = card.querySelector(".category");
-    if (categoryElement) {
-      const categoryText = categoryElement.textContent.toLowerCase();
-      card.style.display = categoryText === categoria ? "block" : "none";
-    }
-  });
-}
+// function aplicarFiltro(categoria) {
+//   const cards = document.querySelectorAll("#data-container > div");
+//   cards.forEach((card) => {
+//     if (categoria === "home") {
+//       card.style.display = "block";
+//       return;
+//     }
+//     const categoryElement = card.querySelector(".category");
+//     if (categoryElement) {
+//       const categoryText = categoryElement.textContent.toLowerCase();
+//       card.style.display = categoryText === categoria ? "block" : "none";
+//     }
+//   });
+// }
 
 export async function renderProducts(role) {
   console.log("Renderizando productos");
+  const itemsPerPage = role === "admin" ? 10 : 12;
   const dataContainer = document.getElementById("data-container");
   if (!dataContainer) return;
   dataContainer.innerHTML = "";
   try {
     const data = await fetchApiData("/productos");
-    const paginateProducts = paginate(data, currentPage, itemsPerPage);
+    if (filteredProducts.length === 0) {
+      filteredProducts = data;
+    }
+    const paginateProducts = paginate(
+      filteredProducts,
+      currentPage,
+      itemsPerPage,
+    );
     paginateProducts.forEach((element) => {
       const { id, url, name, category, price, country } = element;
       const product = document.createElement("div");
-      // product.innerHTML = cartAdmnistrator(name, url, price, category, country);
+      product.innerHTML = cartAdmnistrator(name, url, price, category, country);
       if (role === "admin") {
         product.innerHTML = cartAdmnistrator(
           name,
@@ -172,7 +181,7 @@ export function initHome(username, isAdmin, appContainer) {
   const btnPrev = document.getElementById("prev-page");
   const btnAdd = document.getElementById("add-button");
   if (isAdmin !== "admin") {
-        btnAdd.style.display = "none";
+    btnAdd.style.display = "none";
   }
   if (isAdmin === "admin") {
     const carritoEl = document.getElementById("carrito");
@@ -213,12 +222,23 @@ export function initHome(username, isAdmin, appContainer) {
 
   if (btnBuscar)
     btnBuscar.addEventListener("click", () => {
+      // const texto = (inputBuscar ? inputBuscar.value : "").toLowerCase();
+      // const cards = document.querySelectorAll("#data-container > div");
+      // cards.forEach((card) => {
+      //   const nombreEl = card.querySelector(".nombrecito");
+      //   const nombre = nombreEl ? nombreEl.textContent.toLowerCase() : "";
+      //   card.style.display = nombre.includes(texto) ? "block" : "none";
+      // });
       const texto = (inputBuscar ? inputBuscar.value : "").toLowerCase();
-      const cards = document.querySelectorAll("#data-container > div");
-      cards.forEach((card) => {
-        const nombreEl = card.querySelector(".nombrecito");
-        const nombre = nombreEl ? nombreEl.textContent.toLowerCase() : "";
-        card.style.display = nombre.includes(texto) ? "block" : "none";
+
+      fetchApiData("/productos").then((data) => {
+        filteredProducts = data.filter((product) =>
+          product.name.toLowerCase().includes(texto),
+        );
+
+        currentPage = 1;
+
+        renderProducts(isAdmin);
       });
     });
 
@@ -250,7 +270,21 @@ export function initHome(username, isAdmin, appContainer) {
         .querySelectorAll(".cat-btn")
         .forEach((b) => b.classList.remove("active-cat"));
       btn.classList.add("active-cat");
-      aplicarFiltro(btn.id.toLowerCase());
+      const categoria = btn.id.toLowerCase();
+
+      fetchApiData("/productos").then((data) => {
+        if (categoria === "home") {
+          filteredProducts = data;
+        } else {
+          filteredProducts = data.filter(
+            (product) => product.category.toLowerCase() === categoria,
+          );
+        }
+
+        currentPage = 1;
+
+        renderProducts(isAdmin);
+      });
     });
 
   // render inicial de productos
