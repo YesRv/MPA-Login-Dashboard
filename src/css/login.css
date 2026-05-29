@@ -2,17 +2,42 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&family=DM+Sans:wght@300;400&display=swap');
 
+#login-root {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/src/assets/img/login-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow-y: auto;
+    z-index: 9999;
+}
+
+#login-root:empty {
+    display: none;
+}
+
 .container-login {
-    width: 380px;
-    background: var(--fnd2);
-    border: 0.5px solid var(--fnd3);
-    border-radius: var(--border-radius);
-    padding: 40px 35px;
+    width: 340px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 18px;
+
+    padding: 26px 22px;
+
     position: relative;
-    left: 300px;
-    top: 150px;
-    box-shadow: 0 10px 30px rgba(111, 50, 228, 0.08), 4px 4px 0 0 var(--fnd3);
-    font-family: 'DM Sans', sans-serif;
+    box-sizing: border-box;
+
+    height: fit-content;
+
+    overflow: hidden;
 }
 
 .container-login::before {
@@ -28,15 +53,15 @@
 
 .container-login .brand {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
 }
 
 .container-login .brand-name {
     display: block;
-    font-family: 'Noto Serif JP', serif;
-    font-size: 32px;
+    font-family: 'Bankai';
     font-weight: 400;
-    color: var(--txt1);
+    color: #ffffff;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.12em;
     line-height: 1;
 }
@@ -51,49 +76,8 @@
     text-transform: uppercase;
 }
 
-.welcome {
-    text-align: center;
-    margin-bottom: 24px;
-    padding-bottom: 20px;
-    border-bottom: 0.5px solid var(--fnd3);
-}
-
-.welcome h2 {
-    font-size: 1.3rem;
-    color: var(--txt1);
-    margin-bottom: 6px;
-}
-
-.text-welcome {
-    font-size: 12px;
-    color: var(--txt2);
-    margin-bottom: 16px;
-}
-
-.welcome button {
-    background: var(--fnd1);
-    border: 1px solid var(--fnd3);
-    padding: 8px 16px;
-    font-family: 'Bankai';
-    font-size: 12px;
-    color: var(--color1);
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    margin: 0 4px;
-}
-
-.welcome button:hover {
-    background: var(--color1);
-    color: var(--white);
-}
-
-.container-loginForm, .container-loginNew {
-    display: flex;
-    flex-direction: column;
-}
-
 .container-login form {
+    gap: 2px;
     display: flex;
     flex-direction: column;
 }
@@ -104,9 +88,9 @@
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--color1);
-    margin-bottom: 6px;
-    margin-top: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 4px;
+    margin-top: 11px;
 }
 
 .container-login label:first-of-type {
@@ -115,37 +99,53 @@
 
 .container-login input {
     width: 100%;
-    background: var(--fnd1);
+    background: rgba(255, 255, 255, 0.12);
     border: none;
-    border-bottom: 1.5px solid var(--fnd3);
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--txt1);
+    font-size: 13px;
+    color: #ffffff;
     outline: none;
     box-sizing: border-box;
+    align-self: start;
     transition: all 0.2s ease;
 }
 
 .container-login input:focus {
     border-bottom-color: var(--color1);
-    background: var(--purple-light);
-    box-shadow: 0 2px 8px rgba(111, 50, 228, 0.05);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 2px 8px rgba(111, 50, 228, 0.2);
 }
 
 .container-login input::placeholder {
-    color: var(--txt3);
+    color: rgba(255, 255, 255, 0.45);
     font-style: italic;
-    opacity: 0.7;
+}
+
+.container-login select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    outline: none;
+    box-sizing: border-box;
+    align-self: start;
+    cursor: pointer;
 }
 
 .container-login button[type="submit"], #adduser {
     width: 100%;
-    margin-top: 26px;
-    padding: 14px;
+    margin-top: 16px;
+    padding: 11px;
     background: var(--color1);
-    color: #FFFFFF;
+    color: #ffffff;
     border: none;
     border-radius: 10px;
     font-family: 'Bankai';
@@ -169,33 +169,88 @@
 
 .form-footer, .form-footer-New {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 12px;
 }
 
 .form-footer p, .form-footer-New p {
     font-size: 13px;
-    color: var(--txt2);
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .container-login span {
-    color: var(--color1);
+    color: var(--color4);
     font-weight: 600;
     cursor: pointer;
-    border-bottom: 1px solid var(--color1);
+    border-bottom: 1px solid var(--color4);
     padding-bottom: 1px;
     transition: color 0.2s;
 }
 
 .container-login span:hover {
-    color: var(--color4);
-    border-bottom-color: var(--color4);
+    color: #ffffff;
+    border-bottom-color: #ffffff;
 }
 
-#message {
+#message-login-user, #message-login-new {
     font-size: 12px;
     color: var(--color4);
     text-align: center;
     margin-top: 12px;
     min-height: 16px;
     font-family: 'DM Sans', sans-serif;
+}
+
+/* ========== SLIDE HORIZONTAL ========== */
+
+.slide-viewport {
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+.slide-track {
+    display: flex;
+    align-items: flex-start;
+    transition: transform 0.45s cubic-bezier(.4, 0, .2, 1);
+}
+
+.slide-panel {
+    height: auto;
+    min-width: 100%;
+    flex-shrink: 0;
+}
+
+/* ========== TABS ========== */
+
+.login-tabs {
+    display: flex;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 18px;
+}
+
+.login-tab {
+    flex: 1;
+    padding: 9px;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Bankai', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.login-tab.active {
+    background: var(--color1);
+    color: #ffffff;
+}
+
+.login-tab:not(.active):hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
 }

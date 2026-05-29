@@ -66,6 +66,111 @@
 
 #modal-cuopon {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--purple-light, #f3eeff);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.cuopon-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cuopon-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--purple-dark, #491cb0);
+}
+
+#btn-toggle-cupones {
+  background: none;
+  border: none;
+  color: var(--purple-main, #6f32e4);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: background 0.15s;
+  width: auto;
+}
+
+#btn-toggle-cupones:hover {
+  background: var(--fnd3, #E0D9FF);
+}
+
+/* Lista desplegable de cupones */
+.cuopon-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.cuopon-lista.hidden {
+  display: none;
+}
+
+.cuopon-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border: 2px solid var(--fnd3, #E0D9FF);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  gap: 10px;
+}
+
+.cuopon-card:hover {
+  border-color: var(--purple-main, #6f32e4);
+  box-shadow: 0 2px 8px rgba(111, 50, 228, 0.15);
+}
+
+.cuopon-card.selected {
+  border-color: var(--purple-main, #6f32e4);
+  background: var(--purple-light, #f3eeff);
+}
+
+.cuopon-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.cuopon-card-name {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--purple-dark, #491cb0);
+  letter-spacing: 0.5px;
+}
+
+.cuopon-card-desc {
+  font-size: 0.75rem;
+  color: var(--txt2, #4A4A6A);
+}
+
+.cuopon-card-badge {
+  background: var(--purple-main, #6f32e4);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Fila input manual */
+.cuopon-input-row {
+  display: flex;
   gap: 8px;
 }
 
@@ -75,16 +180,24 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   font-size: 0.9rem;
+  font-family: inherit;
+  background: white;
 }
 
 #btn-apply-cuopon {
   padding: 8px 16px;
-  background: #7c3aed;
+  background: var(--purple-main, #6f32e4);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  font-family: inherit;
+  transition: opacity 0.2s;
+}
+
+#btn-apply-cuopon:hover {
+  opacity: 0.85;
 }
 
 #modal-order p {

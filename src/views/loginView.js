@@ -1,72 +1,74 @@
 export function loginView() {
   return `
 <div class="container-login">
-    <div class="brand">
-        <h1 class="brand-name">Kurohana</h1>
-        <p class="brand-sub">cocina asiática</p>
-    </div>
-    <br>
-    <div id="welcome" class="welcome">
-        <h2>Welcome Back!</h2> <p class="text-welcome">Enter personal</p>
-        <button id="sign-in-button">Login</button>
-        <button id="sign-up-button">Sign Up</button>
-    </div>
 
-    <article id="login-new" class="container-loginNew hidden">
-        <form id="form-new">
-            <label for="usernameNew">User</label>
-            <input type="text" id="usernameNew" placeholder="username" >
+  <div class="brand">
+    <h1 class="brand-name">Kurohana</h1>
+    <p class="brand-sub">cocina asiática</p>
+  </div>
 
-            <label for="useremail">Email</label>
-            <input type="email" id="useremail" placeholder="maria@example.com" >
+  <div class="login-tabs">
+    <button class="login-tab active" data-panel="0">Sign in</button>
+    <button class="login-tab" data-panel="1">Sign up</button>
+  </div>
 
-            <label for="passwordNew">Password</label>
-            <input type="password" id="passwordNew" placeholder="••••••••" >
+  <div class="slide-viewport">
+    <div class="slide-track" id="slide-track">
 
-            <label for="password">Confirm Password</label>
-            <input type="password" id="passwordConfirmation" placeholder="••••••••" >
-
-            <div class="col-span-1 space-y-2" >
-              <label for="rol">Choose a rol profile</label>
-                  <select id="profileRol"
-                  name="profileRol"
-                  id="rol"
-                  class="w-full border border-gray-200 rounded-lg p-2"
-                  required
-                  >
-                      <option value="white">Choose...</option>
-                      <option value="user" >USER</option>
-                      <option value="blue" >ADMIN</option>
-                  </select> 
-            </div>
-
-            <button id="adduser" type="submit">Sign Up</button>
-
-            <div class="form-footer-New">
-                <p>Do you have an account? <span id="to-login" style="cursor:pointer; color:blue;">Login</span></p>
-            </div>
-
-            <p id="message-login-new"></p>
-        </form>
-    </article>
-
-    <article id="login-user" class="container-loginForm hidden">
+      <article class="slide-panel" id="login-user">
         <form id="login-form">
-            <label for="username">User</label>
-            <input type="text" id="username" placeholder="username" >
+          <label for="username">User</label>
+          <input type="text" id="username" placeholder="username">
 
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="••••••••" >
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••">
 
-            <button type="submit">Login</button>
+          <button type="submit">Sign In</button>
 
-            <div class="form-footer">
-                <p>Don't you have an account? <span id="to-register" style="cursor:pointer; color:blue;">Sign Up</span></p>
-            </div>
+          <div class="form-footer">
+            <p>Don't you have an account? <span id="to-register">Sign Up</span></p>
+          </div>
 
-            <p id="message-login-user"></p>
+          <p id="message-login-user"></p>
         </form>
-    </article>
+      </article>
+
+      <article class="slide-panel" id="login-new">
+        <form id="form-new">
+          <label for="usernameNew">User</label>
+          <input type="text" id="usernameNew" placeholder="username">
+
+          <label for="useremail">Email</label>
+          <input type="email" id="useremail" placeholder="maria@example.com">
+
+          <label for="passwordNew">Password</label>
+          <input type="password" id="passwordNew" placeholder="••••••••">
+
+          <label for="passwordConfirmation">Confirm Password</label>
+          <input type="password" id="passwordConfirmation" placeholder="••••••••">
+
+          <div class="col-span-1 space-y-2">
+            <label for="profileRol">Choose a rol profile</label>
+            <select id="profileRol" name="profileRol" required>
+              <option value="white">Choose...</option>
+              <option value="user">USER</option>
+              <option value="blue">ADMIN</option>
+            </select>
+          </div>
+
+          <button id="adduser" type="submit">Sign Up</button>
+
+          <div class="form-footer-New">
+            <p>Do you have an account? <span id="to-login">Sign In</span></p>
+          </div>
+
+          <p id="message-login-new"></p>
+        </form>
+      </article>
+
+    </div>
+  </div>
+
 </div>
 `;
 }

@@ -1,7 +1,7 @@
 import { fetchApiData } from "../utils/utils.js";
 import { agregarAlCarrito, initCarrito } from "./cartController.js";
 import { cartAdmnistrator } from "../components/cartAdm.js";
-import { cartUser } from "../components/cartUser.js";
+import { cartUser, popularCard } from "../components/cartUser.js";
 import sidebar from "../components/sidebar.js";
 import sidebarController from "./sidebarController.js";
 import { paginate } from "../components/pagination.js";
@@ -19,20 +19,18 @@ function resetForm(btnCreate) {
   }
 }
 
-// function aplicarFiltro(categoria) {
-//   const cards = document.querySelectorAll("#data-container > div");
-//   cards.forEach((card) => {
-//     if (categoria === "home") {
-//       card.style.display = "block";
-//       return;
-//     }
-//     const categoryElement = card.querySelector(".category");
-//     if (categoryElement) {
-//       const categoryText = categoryElement.textContent.toLowerCase();
-//       card.style.display = categoryText === categoria ? "block" : "none";
-//     }
-//   });
-// }
+function aplicarFiltro(categoria) {
+  fetchApiData("/productos").then((data) => {
+    if (categoria === "home") {
+      filteredProducts = data;
+    } else {
+      filteredProducts = data.filter(
+        (product) => product.category.toLowerCase() === categoria,
+      );
+    }
+    currentPage = 1;
+  });
+}
 
 export async function renderProducts(role) {
   console.log("Renderizando productos");
@@ -172,6 +170,38 @@ async function sendData() {
   }
 }
 
+async function renderPopulares(role) {
+  const contenedor = document.getElementById("populares-container");
+  if (!contenedor) return;
+  contenedor.innerHTML = "";
+
+  try {
+    const data = await fetchApiData("/productos");
+    const populares = data
+      .filter((p) => p.pedidos && p.pedidos > 0)
+      .sort((a, b) => b.pedidos - a.pedidos)
+      .slice(0, 5);
+
+    if (populares.length === 0) {
+      document.getElementById("populares-section").style.display = "none";
+      return;
+    }
+
+    populares.forEach((element) => {
+      const { id, url, name, price, category, country } = element;
+      const card = document.createElement("div");
+      card.innerHTML = popularCard(name, url, price);
+
+      card.querySelector(".btn-agregar").addEventListener("click", () => {
+        agregarAlCarrito({ id, nombre: name, precio: Number(price), url });
+      });
+      contenedor.appendChild(card);
+    });
+  } catch (err) {
+    document.getElementById("populares-section").style.display = "none";
+  }
+}
+
 export function initHome(username, isAdmin, appContainer) {
   // Elementos
   const btnCreate = document.getElementById("create");
@@ -287,8 +317,9 @@ export function initHome(username, isAdmin, appContainer) {
       });
     });
 
-  // render inicial de productos
+  // render inicial de productos y populares
   renderProducts(isAdmin);
+  renderPopulares(isAdmin);
 }
 
 export default { initHome, renderProducts };

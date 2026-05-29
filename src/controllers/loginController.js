@@ -1,17 +1,15 @@
 import { fetchApiData } from "../utils/utils.js";
 import { homeView } from "../views/homeView.js";
 import { initHome } from "./homeController.js";
-import { hashPassword } from "../utils/utils.js";
 
-export async function loginController(appContainer) {
+export async function loginController(appContainer, loginRoot) {
   // mensajes especiales, form
   const messageLoginUser = document.getElementById("message-login-user");
   const messageLoginNew = document.getElementById("message-login-new");
   const formNew = document.getElementById("form-new");
   const formLogin = document.getElementById("login-form");
 
-  // inputs
-  // LOGIN INPUTS
+  // LOGIN INPUTS 
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
 
@@ -19,13 +17,11 @@ export async function loginController(appContainer) {
   const usernameNewInput = document.getElementById("usernameNew");
   const emailNewInput = document.getElementById("useremail");
   const passwordNewInput = document.getElementById("passwordNew");
-  const passwordConfirmationInput = document.getElementById(
-    "passwordConfirmation",
-  );
+  const passwordConfirmationInput = document.getElementById("passwordConfirmation");
+
   addLoginEventsListeners();
 
-
-  // login control for user and "admin"
+  // CUENTA ADMINISTRATIVA
 
   const userAdm = "Kurohana-Adm";
   const passAdm = "123456";
@@ -49,16 +45,11 @@ export async function loginController(appContainer) {
         localStorage.setItem("auth", "true");
         localStorage.setItem("role", "admin");
         localStorage.setItem("username", userAdm);
-        if (appContainer) {
-          appContainer.innerHTML = homeView();
-          initHome(userAdm, "admin", appContainer);
-        }
+        loginRoot.innerHTML = "";
+        appContainer.innerHTML = homeView();
+        initHome(userAdm, "admin", appContainer);
         return true;
       }
-      // HASSHH pal login 
-      const hashedInputPassword =
-        await hashPassword(passwordValue);
-
       // validar que el men exista
 
       const userExists = data.some(
@@ -67,39 +58,23 @@ export async function loginController(appContainer) {
 
       if (userExists) {
         messageLoginUser.textContent = "Welcome to Kurohana";
-
         localStorage.setItem("auth", "true");
-
-        // VALIDAR SI ES ADMIN
-        if (userExists.role === "admin") {
-          localStorage.setItem("role", "admin");
-        } else {
-          localStorage.setItem("role", "user");
-        }
-
+        localStorage.setItem("role", "user");
         localStorage.setItem("username", usernameValue);
-
-        if (appContainer) {
-          appContainer.innerHTML = homeView();
-
-          initHome(
-            usernameValue,
-            userExists.role === "admin" ? "admin" : "user",
-            appContainer,
-          );
-        }
-
+        loginRoot.innerHTML = "";
+        appContainer.innerHTML = homeView();
+        initHome(usernameValue, "user", appContainer);
         return true;
       }
+
       messageLoginUser.textContent = "Invalid username or password";
       return false;
     } catch {
-      alert("Connection error — make sure JSON Server is running please");
+      alert("Connection error — make sure JSON Server is running");
     }
   });
 
   // CREAR USUARIO
-
   formNew.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -107,15 +82,14 @@ export async function loginController(appContainer) {
     const password = passwordNewInput.value.trim();
     const email = emailNewInput.value.trim();
 
-    const hashedPassword = await hashPassword(password);
-    const userData = { username, email, password: hashedPassword };
+    const userData = { username, email, password };
 
     if (!username || !password || !email) {
       messageLoginNew.innerText = "Please fill in all the fields";
       return;
     }
-    const passwordConfirmation = passwordConfirmationInput.value.trim();
 
+    const passwordConfirmation = passwordConfirmationInput.value.trim();
     if (password !== passwordConfirmation) {
       alert("Passwords don't match");
       formNew.reset();
@@ -123,51 +97,45 @@ export async function loginController(appContainer) {
     }
 
     try {
-      // If the user fill all the fields the new user will be save on the json server
-      // 1. GET all users from json-server
       const usersResponse = await fetch("http://localhost:3000/users");
       const users = await usersResponse.json();
 
-      // Validate duplicated username 
-      const usernameExists = users.some(
-        (user) => user.username === username
-      );
+      // 2. Validate duplicated username
+      const usernameExists = users.some((user) => user.username === username);
 
       if (usernameExists) {
         messageLoginNew.innerText = "This username is already taken";
         return;
       }
 
-      // Validate duplicated email
-      const emailExists = users.some(
-        (user) => user.email === email
-      );
+      // 3. Validate duplicated email
+      const emailExists = users.some((user) => user.email === email);
 
       if (emailExists) {
         messageLoginNew.innerText = "This email is already registered";
         return;
       }
 
-      // Save user
+      // 4. Create new user object
+      const userData = {
+        username,
+        email,
+        password,
+      };
+
+      // 5. Save user
       const response = await fetch("http://localhost:3000/users", {
         method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-        },
-
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
 
       if (response.ok) {
         messageLoginNew.innerText = "The account was created successfully";
-
-        const loginUser = document.getElementById("login-user");
-        const loginNew = document.getElementById("login-new");
-
-        loginUser.classList.remove("hidden");
-        loginNew.classList.add("hidden");
-
+        const track = document.getElementById("slide-track");
+        const tabs = document.querySelectorAll(".login-tab");
+        track.style.transform = "translateX(0)";
+        tabs.forEach((t, i) => t.classList.toggle("active", i === 0));
         formNew.reset();
       } else {
         messageLoginNew.innerText = "Error creating account";
@@ -179,41 +147,21 @@ export async function loginController(appContainer) {
 }
 
 function addLoginEventsListeners() {
-  // contenedores del login
-  const welcome = document.getElementById("welcome");
-  const loginNew = document.getElementById("login-new");
-  const loginUser = document.getElementById("login-user");
+  const track = document.getElementById("slide-track");
+  const tabs = document.querySelectorAll(".login-tab");
 
-  // botones Welcome
-  const signInButton = document.getElementById("sign-in-button");
-  const signUpButton = document.getElementById("sign-up-button");
+  function slideTo(index) {
+    track.style.transform = `translateX(${-index * 100}%)`;
+    tabs.forEach((t, i) => t.classList.toggle("active", i === index));
+  }
 
-  // enlaces de span
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => slideTo(i));
+  });
+
   const toRegisterSpan = document.getElementById("to-register");
+  if (toRegisterSpan) toRegisterSpan.addEventListener("click", () => slideTo(1));
+
   const toLoginSpan = document.getElementById("to-login");
-
-  // para iniciar sesion
-  signInButton.addEventListener("click", () => {
-    welcome.classList.add("hidden");
-    loginUser.classList.remove("hidden");
-  });
-
-  // para registrarse
-  signUpButton.addEventListener("click", () => {
-    welcome.classList.add("hidden");
-    loginNew.classList.remove("hidden");
-  });
-
-  // de registro a login
-  toLoginSpan.addEventListener("click", () => {
-    loginNew.classList.add("hidden");
-    loginUser.classList.remove("hidden");
-  });
-
-  // de login a registo
-  toRegisterSpan.addEventListener("click", () => {
-    loginUser.classList.add("hidden");
-    loginNew.classList.add("hidden");
-    loginNew.classList.remove("hidden");
-  });
+  if (toLoginSpan) toLoginSpan.addEventListener("click", () => slideTo(0));
 }

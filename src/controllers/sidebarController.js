@@ -15,10 +15,13 @@ export default function sidebarController(appContainer) {
     exitButton.addEventListener("click", ()=> {
         console.log("Iniciando progreso de cierre de sesión...")
         localStorage.clear();
-        // Limpiar clases residuales del contenedor antes de mostrar el login
+        // Limpiar clases residuales del contenedor principal
         appContainer.classList.remove("sin-carrito");
-        appContainer.innerHTML = loginView();
-        loginController(appContainer);
+        appContainer.innerHTML = "";
+        // Renderizar el login en su contenedor correcto (#login-root)
+        const loginRoot = document.getElementById("login-root");
+        loginRoot.innerHTML = loginView();
+        loginController(appContainer, loginRoot);
     })
 
     const btnSettings = document.getElementById("btn-settings");
