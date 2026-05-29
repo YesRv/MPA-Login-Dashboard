@@ -15,6 +15,8 @@ export default function sidebarController(appContainer) {
     exitButton.addEventListener("click", ()=> {
         console.log("Iniciando progreso de cierre de sesión...")
         localStorage.clear();
+        // Limpiar clases residuales del contenedor antes de mostrar el login
+        appContainer.classList.remove("sin-carrito");
         appContainer.innerHTML = loginView();
         loginController(appContainer);
     })
@@ -92,6 +94,11 @@ export default function sidebarController(appContainer) {
             initOrder(appContainer)
             openModal("order-modal");
         });
+    }
+
+    const btnFavorite = document.getElementById("btn-favorite");
+    if (btnFavorite) {
+        btnFavorite.addEventListener("click", () => openSectionModal("favorite-modal", "Favorite", appContainer));
     }
 
     const btnCoupon = document.getElementById("btn-coupon");

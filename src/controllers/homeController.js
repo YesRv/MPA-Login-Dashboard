@@ -124,6 +124,10 @@ export async function renderProducts(role) {
   // Aplicar filtro activo después de cargar las cards
   const btnActivo = document.querySelector(".cat-btn.active-cat");
   if (btnActivo) aplicarFiltro(btnActivo.id);
+
+  requestAnimationFrame(() => {
+    window.dispatchEvent(new Event('resize'));
+  });
 }
 
 async function sendData() {
@@ -172,7 +176,67 @@ async function sendData() {
   }
 }
 
+
+export async function renderPopulares() {
+  try {
+    const [productosRes, ordersRes] = await Promise.all([
+      fetch('http://localhost:3000/productos'),
+      fetch('http://localhost:3000/orders')
+    ]);
+    const productos = await productosRes.json();
+    const orders = await ordersRes.json();
+
+    const ahora = Date.now();
+    const siete_dias = 7 * 24 * 60 * 60 * 1000;
+
+    const scores = {};
+    orders.forEach(order => {
+      const esReciente = (ahora - new Date(order.fecha).getTime()) < siete_dias;
+      order.items.forEach(item => {
+        if (!scores[item.id]) scores[item.id] = 0;
+        scores[item.id] += item.cantidad;
+        if (esReciente) scores[item.id] += item.cantidad * 0.5;
+      });
+    });
+
+    const top5 = productos
+      .map(p => ({ ...p, score: scores[p.id] || 0 }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
+
+    const container = document.getElementById('populares-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    if (top5.every(p => p.score === 0)) {
+      container.innerHTML = '<p class="populares-vacio">No hay datos de pedidos aún</p>';
+      return;
+    }
+
+    top5.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'popular-card';
+      card.innerHTML = `
+        <img src="${p.url}" alt="${p.name}" class="popular-card-img" />
+        <div class="popular-card-info">
+          <span class="popular-card-name">${p.name}</span>
+          <span class="popular-card-price">$${p.price}</span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error('Error cargando populares:', err);
+  }
+}
+
 export function initHome(username, isAdmin, appContainer) {
+  // --- RESET: limpiar clases y estilos residuales del #app antes de aplicar el rol ---
+  const appEl = document.getElementById("app");
+  if (appEl) {
+    appEl.classList.remove("sin-carrito");
+  }
+
   // Elementos
   const btnCreate = document.getElementById("create");
   const inputBuscar = document.getElementById("inputB");
@@ -191,7 +255,6 @@ export function initHome(username, isAdmin, appContainer) {
     if (carritoFab) carritoFab.style.display = "none";
     if (carritoOverlay) carritoOverlay.style.display = "none";
 
-    const appEl = document.getElementById("app");
     if (appEl) appEl.classList.add("sin-carrito");
   }
   const btnCancel = document.getElementById("cancel");
@@ -287,8 +350,8 @@ export function initHome(username, isAdmin, appContainer) {
       });
     });
 
-  // render inicial de productos
-  renderProducts(isAdmin);
+  // render populares primero (reserva espacio), luego productos
+  renderPopulares().then(() => renderProducts(isAdmin));
 }
 
 export default { initHome, renderProducts };
