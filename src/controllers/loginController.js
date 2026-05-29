@@ -46,9 +46,7 @@ export async function loginController(appContainer, loginRoot) {
         localStorage.setItem("auth", "true");
         localStorage.setItem("role", "admin");
         localStorage.setItem("username", userAdm);
-        loginRoot.innerHTML = "";
-        appContainer.innerHTML = homeView();
-        initHome(userAdm, "admin", appContainer);
+        window.location.hash = "#home";
         return true;
       }
       // validar que el men exista
@@ -62,9 +60,7 @@ export async function loginController(appContainer, loginRoot) {
         localStorage.setItem("auth", "true");
         localStorage.setItem("role", "user");
         localStorage.setItem("username", usernameValue);
-        loginRoot.innerHTML = "";
-        appContainer.innerHTML = homeView();
-        initHome(usernameValue, "user", appContainer);
+        window.location.hash = "#home";
         return true;
       }
 
@@ -177,10 +173,9 @@ export async function loginController(appContainer, loginRoot) {
 
       if (response.ok) {
         messageLoginNew.innerText = "The account was created successfully";
-        const track = document.getElementById("slide-track");
         const tabs = document.querySelectorAll(".login-tab");
-        track.style.transform = "translateX(0)";
-        tabs.forEach((t, i) => t.classList.toggle("active", i === 0));
+        // trigger the first tab click so UI classes and heights update consistently
+        if (tabs && tabs[0]) tabs[0].click();
         formNew.reset();
       } else {
         messageLoginNew.innerText = "Error creating account";
@@ -194,10 +189,22 @@ export async function loginController(appContainer, loginRoot) {
 function addLoginEventsListeners() {
   const track = document.getElementById("slide-track");
   const tabs = document.querySelectorAll(".login-tab");
+  const viewport = document.querySelector('.slide-viewport');
+  const panels = document.querySelectorAll('.slide-panel');
+  let currentIndex = 0;
+
+  function updateViewportHeight(index) {
+    if (!viewport || !panels || !panels[index]) return;
+    const h = panels[index].offsetHeight;
+    viewport.style.height = h + 'px';
+  }
 
   function slideTo(index) {
-    track.style.transform = `translateX(${-index * 100}%)`;
+    if (!track) return;
+    track.style.transform = `translateX(${ -index * 100 }%)`;
     tabs.forEach((t, i) => t.classList.toggle("active", i === index));
+    currentIndex = index;
+    updateViewportHeight(index);
   }
 
   tabs.forEach((tab, i) => {
@@ -209,4 +216,10 @@ function addLoginEventsListeners() {
 
   const toLoginSpan = document.getElementById("to-login");
   if (toLoginSpan) toLoginSpan.addEventListener("click", () => slideTo(0));
+
+  // initialize viewport height to the first panel
+  updateViewportHeight(0);
+
+  // adjust height on window resize
+  window.addEventListener('resize', () => updateViewportHeight(currentIndex));
 }
