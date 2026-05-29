@@ -28,7 +28,8 @@ export default async function routerMiddleware(routes, appContainer, loginRoot) 
 
   if (path === "login") {
     appContainer.innerHTML = "";
-    loginRoot.innerHTML = routes.login.view();
+    const loginMarkup = routes.login.view().trim();
+    loginRoot.innerHTML = loginMarkup;
     await routes.login.controller(appContainer, loginRoot);
     return;
   }
