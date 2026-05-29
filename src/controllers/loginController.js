@@ -1,6 +1,7 @@
 import { fetchApiData } from "../utils/utils.js";
 import { homeView } from "../views/homeView.js";
 import { initHome } from "./homeController.js";
+import { hashPassword } from "../utils/utils.js";
 
 export async function loginController(appContainer, loginRoot) {
   // mensajes especiales, form
@@ -22,6 +23,7 @@ export async function loginController(appContainer, loginRoot) {
   addLoginEventsListeners();
 
   // CUENTA ADMINISTRATIVA
+
   const userAdm = "Kurohana-Adm";
   const passAdm = "123456";
 
@@ -49,9 +51,13 @@ export async function loginController(appContainer, loginRoot) {
         initHome(userAdm, "admin", appContainer);
         return true;
       }
+      // HASSHH pal login 
+      const hashedInputPassword =
+        await hashPassword(passwordValue);
 
-      const userExists = data.some(
-        (u) => u.username === usernameValue && u.password === passwordValue
+      // validar que el men exista
+      const userExists = data.find(
+        (u) => u.username === usernameValue && u.password === passwordValue,
       );
 
       if (userExists) {
@@ -80,6 +86,8 @@ export async function loginController(appContainer, loginRoot) {
     const password = passwordNewInput.value.trim();
     const email = emailNewInput.value.trim();
 
+    const userData = { username, email, password };
+
     if (!username || !password || !email) {
       messageLoginNew.innerText = "Please fill in all the fields";
       return;
@@ -87,7 +95,7 @@ export async function loginController(appContainer, loginRoot) {
 
     const passwordConfirmation = passwordConfirmationInput.value.trim();
     if (password !== passwordConfirmation) {
-      alert("Passwords do not match");
+      alert("Passwords don't match");
       formNew.reset();
       return;
     }
@@ -96,20 +104,30 @@ export async function loginController(appContainer, loginRoot) {
       const usersResponse = await fetch("http://localhost:3000/users");
       const users = await usersResponse.json();
 
+      // 2. Validate duplicated username
       const usernameExists = users.some((user) => user.username === username);
+
       if (usernameExists) {
         messageLoginNew.innerText = "This username is already taken";
         return;
       }
 
+      // 3. Validate duplicated email
       const emailExists = users.some((user) => user.email === email);
+
       if (emailExists) {
         messageLoginNew.innerText = "This email is already registered";
         return;
       }
 
-      const userData = { username, email, password };
+      // 4. Create new user object
+      const userData = {
+        username,
+        email,
+        password,
+      };
 
+      // 5. Save user
       const response = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

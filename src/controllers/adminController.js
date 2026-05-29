@@ -60,6 +60,13 @@ export async function renderUsers() {
 
       btnRoleUser.addEventListener("click", async () => {
         const newRole = element.role === "admin" ? "user" : "admin";
+        const currentUser = localStorage.getItem("username");
+
+        if (currentUser === username) {
+          localStorage.setItem("role", newRole);
+
+          location.reload();
+        }
 
         try {
           const response = await fetch(`http://localhost:3000/users/${id}`, {
