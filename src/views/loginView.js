@@ -4,7 +4,7 @@ export function loginView() {
 
   <div class="brand">
     <h1 class="brand-name">Kurohana</h1>
-    <p class="brand-sub">Asian Cuisiner</p>
+    <p class="brand-sub">Asian Cuisine</p>
   </div>
 
   <div class="login-tabs">
