@@ -6,6 +6,7 @@
 @import url('./login.css');
 @import url('./responsive.css');
 @import url('./modal.css');
+@import url('./modal-order.css');
 
 /* ========== KUROHANA SPA — ESTILOS PRINCIPALES ========== */
 
@@ -47,13 +48,17 @@ body {
     font-family: 'Bankai';
     color: var(--text-dark);
     margin: 0;
-    padding: 20px;
+    padding: 0;
 }
 
 #app {
-    margin-left: 200px;
-    margin-right: 220px;
+    margin-left: 220px;
+    margin-right: 240px;
     padding: 0px;
+    box-sizing: border-box;
+    min-height: 100vh;
 }
 
-
+#app.sin-carrito {
+    margin-right: 0px;
+}

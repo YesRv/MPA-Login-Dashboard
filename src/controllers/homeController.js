@@ -1,9 +1,14 @@
 import { fetchApiData } from "../utils/utils.js";
 import { agregarAlCarrito, initCarrito } from "./cartController.js";
 import { cartAdmnistrator } from "../components/cartAdm.js";
-import { cartUser } from "../components/cartUser.js";
+import { cartUser, popularCard } from "../components/cartUser.js";
 import sidebar from "../components/sidebar.js";
 import sidebarController from "./sidebarController.js";
+import { paginate } from "../components/pagination.js";
+
+let currentPage = 1;
+let itemsPerPage = 12;
+let filteredProducts = [];
 
 function resetForm(btnCreate) {
   const form = document.getElementById("formData");
@@ -15,35 +20,48 @@ function resetForm(btnCreate) {
 }
 
 function aplicarFiltro(categoria) {
-  const cards = document.querySelectorAll("#data-container > div");
-  cards.forEach((card) => {
+  fetchApiData("/productos").then((data) => {
     if (categoria === "home") {
-      card.style.display = "block";
-      return;
+      filteredProducts = data;
+    } else {
+      filteredProducts = data.filter(
+        (product) => product.category.toLowerCase() === categoria,
+      );
     }
-    const categoryElement = card.querySelector(".category");
-    if (categoryElement) {
-      const categoryText = categoryElement.textContent.toLowerCase();
-      card.style.display = categoryText === categoria ? "block" : "none";
-    }
+    currentPage = 1;
   });
 }
 
 export async function renderProducts(role) {
-  console.log("Renderizando productos")
+  console.log("Renderizando productos");
+  const itemsPerPage = role === "admin" ? 10 : 12;
   const dataContainer = document.getElementById("data-container");
   if (!dataContainer) return;
   dataContainer.innerHTML = "";
   try {
-    const data = await fetchApiData("/productos")
-    data.forEach((element) => {
+    const data = await fetchApiData("/productos");
+    if (filteredProducts.length === 0) {
+      filteredProducts = data;
+    }
+    const paginateProducts = paginate(
+      filteredProducts,
+      currentPage,
+      itemsPerPage,
+    );
+    paginateProducts.forEach((element) => {
       const { id, url, name, category, price, country } = element;
       const product = document.createElement("div");
-      // product.innerHTML = cartAdmnistrator(name, url, price, category, country);
+      product.innerHTML = cartAdmnistrator(name, url, price, category, country);
       if (role === "admin") {
-        product.innerHTML = cartAdmnistrator(name, url, price, category, country)
+        product.innerHTML = cartAdmnistrator(
+          name,
+          url,
+          price,
+          category,
+          country,
+        );
       } else {
-        product.innerHTML = cartUser(name, url, price, category, country)
+        product.innerHTML = cartUser(name, url, price, category, country);
       }
 
       if (role === "admin") {
@@ -52,10 +70,12 @@ export async function renderProducts(role) {
           .querySelector(".btn-eliminar")
           .addEventListener("click", async () => {
             const confirmar = confirm(
-              `¿Estas seguro de que quieres eliminar a ${name}?`,
+              `Are you sure you want to delete ${name}?`,
             );
             if (confirmar) {
-              const confirmar2 = confirm(`¿Seguro? Sera irreversible`);
+              const confirmar2 = confirm(
+                `Are you sure? It will be irreversible`,
+              );
               if (confirmar2) {
                 try {
                   const response = await fetch(
@@ -64,7 +84,7 @@ export async function renderProducts(role) {
                   );
                   if (response.ok) {
                     product.remove();
-                    alert("Se elimino correctamente");
+                    alert("It was successfully removed");
                   }
                 } catch (error) {
                   console.error(error);
@@ -84,16 +104,15 @@ export async function renderProducts(role) {
 
           const btnCreate = document.getElementById("create");
           if (btnCreate) {
-            btnCreate.textContent = "Actualizar";
+            btnCreate.textContent = "Update";
             btnCreate.setAttribute("data-editing", id);
           }
         });
+      } else {
+        product.querySelector(".btn-agregar").addEventListener("click", () => {
+          agregarAlCarrito({ id, nombre: name, precio: Number(price), url });
+        });
       }
-      // agregar al carrito
-      product.querySelector(".btn-agregar").addEventListener("click", () => {
-        agregarAlCarrito({ id, nombre: name, precio: Number(price), url });
-      });
-
       dataContainer.appendChild(product);
     });
   } catch (err) {
@@ -151,15 +170,60 @@ async function sendData() {
   }
 }
 
+async function renderPopulares(role) {
+  const contenedor = document.getElementById("populares-container");
+  if (!contenedor) return;
+  contenedor.innerHTML = "";
+
+  try {
+    const data = await fetchApiData("/productos");
+    const populares = data
+      .filter((p) => p.pedidos && p.pedidos > 0)
+      .sort((a, b) => b.pedidos - a.pedidos)
+      .slice(0, 5);
+
+    if (populares.length === 0) {
+      document.getElementById("populares-section").style.display = "none";
+      return;
+    }
+
+    populares.forEach((element) => {
+      const { id, url, name, price, category, country } = element;
+      const card = document.createElement("div");
+      card.innerHTML = popularCard(name, url, price);
+
+      card.querySelector(".btn-agregar").addEventListener("click", () => {
+        agregarAlCarrito({ id, nombre: name, precio: Number(price), url });
+      });
+      contenedor.appendChild(card);
+    });
+  } catch (err) {
+    document.getElementById("populares-section").style.display = "none";
+  }
+}
+
 export function initHome(username, isAdmin, appContainer) {
   // Elementos
   const btnCreate = document.getElementById("create");
   const inputBuscar = document.getElementById("inputB");
   const btnBuscar = document.getElementById("buscar");
-  const btnAdd = document.getElementById("add-button") 
+  const btnNext = document.getElementById("next-page");
+  const btnPrev = document.getElementById("prev-page");
+  const btnAdd = document.getElementById("add-button");
   if (isAdmin !== "admin") {
-        btnAdd.style.display = "none";
-      }
+    btnAdd.style.display = "none";
+  }
+  if (isAdmin === "admin") {
+    const carritoEl = document.getElementById("carrito");
+    const carritoFab = document.getElementById("carrito-fab");
+    const carritoOverlay = document.getElementById("carrito-overlay");
+    if (carritoEl) carritoEl.style.display = "none";
+    if (carritoFab) carritoFab.style.display = "none";
+    if (carritoOverlay) carritoOverlay.style.display = "none";
+
+    const appEl = document.getElementById("app");
+    if (appEl) appEl.classList.add("sin-carrito");
+  }
   const btnCancel = document.getElementById("cancel");
   const contenedorCategorias = document.getElementById("categorias");
 
@@ -188,28 +252,74 @@ export function initHome(username, isAdmin, appContainer) {
 
   if (btnBuscar)
     btnBuscar.addEventListener("click", () => {
+      // const texto = (inputBuscar ? inputBuscar.value : "").toLowerCase();
+      // const cards = document.querySelectorAll("#data-container > div");
+      // cards.forEach((card) => {
+      //   const nombreEl = card.querySelector(".nombrecito");
+      //   const nombre = nombreEl ? nombreEl.textContent.toLowerCase() : "";
+      //   card.style.display = nombre.includes(texto) ? "block" : "none";
+      // });
       const texto = (inputBuscar ? inputBuscar.value : "").toLowerCase();
-      const cards = document.querySelectorAll("#data-container > div");
-      cards.forEach((card) => {
-        const nombreEl = card.querySelector(".nombrecito");
-        const nombre = nombreEl ? nombreEl.textContent.toLowerCase() : "";
-        card.style.display = nombre.includes(texto) ? "block" : "none";
+
+      fetchApiData("/productos").then((data) => {
+        filteredProducts = data.filter((product) =>
+          product.name.toLowerCase().includes(texto),
+        );
+
+        currentPage = 1;
+
+        renderProducts(isAdmin);
       });
     });
 
-  if (btnCreate) btnCreate.addEventListener("click", (e) => { e.preventDefault(); sendData(); });
+  if (btnNext)
+    btnNext.addEventListener("click", () => {
+      currentPage++;
+      renderProducts(isAdmin);
+    });
+
+  if (btnPrev)
+    btnPrev.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderProducts(isAdmin);
+      }
+    });
+
+  if (btnCreate)
+    btnCreate.addEventListener("click", (e) => {
+      e.preventDefault();
+      sendData();
+    });
 
   if (contenedorCategorias)
     contenedorCategorias.addEventListener("click", (event) => {
       const btn = event.target.closest("button.cat-btn");
       if (!btn) return;
-      document.querySelectorAll(".cat-btn").forEach((b) => b.classList.remove("active-cat"));
+      document
+        .querySelectorAll(".cat-btn")
+        .forEach((b) => b.classList.remove("active-cat"));
       btn.classList.add("active-cat");
-      aplicarFiltro(btn.id.toLowerCase());
+      const categoria = btn.id.toLowerCase();
+
+      fetchApiData("/productos").then((data) => {
+        if (categoria === "home") {
+          filteredProducts = data;
+        } else {
+          filteredProducts = data.filter(
+            (product) => product.category.toLowerCase() === categoria,
+          );
+        }
+
+        currentPage = 1;
+
+        renderProducts(isAdmin);
+      });
     });
 
-  // render inicial de productos
+  // render inicial de productos y populares
   renderProducts(isAdmin);
+  renderPopulares(isAdmin);
 }
 
 export default { initHome, renderProducts };

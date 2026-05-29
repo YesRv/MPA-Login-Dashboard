@@ -273,6 +273,7 @@
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 12px;
+  display: block;
 }
 
 .nombrecito {
@@ -293,8 +294,8 @@
 
 .producto .category {
   font-size: 11px;
-  background-color: var(--color4);
-  color: var(--fnd2);
+  background-color: #fdf0dc;
+  color: #a06820;
   padding: 4px 8px;
   border-radius: 6px;
   align-self: flex-start;
@@ -308,8 +309,8 @@
   margin-top: 6px;
   border-radius: 20px;
   padding: 4px 12px;
-  background-color: var(--color5);
-  color: var(--fnd2);
+  background-color: #e0f2ea;
+  color: #2e7d55;
   font-size: 0.75rem;
 }
 
@@ -372,4 +373,101 @@
 
 .btn-eliminar:hover {
   background-color: #fca5a5;
+}
+
+/* ========== SECCIÓN POPULARES ========== */
+
+.populares-section {
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #d4c8ff 0%, #e0d0ff 50%, #fde0b0 100%);
+  border-radius: 20px;
+  padding: 20px 22px 18px 22px;
+  border: 1px solid #b8a5f0;
+  box-shadow: 0 4px 18px rgba(111, 50, 228, 0.15);
+}
+
+.populares-titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--purple-dark);
+  margin: 0 0 16px 0;
+}
+
+.populares-container {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.populares-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.populares-container::-webkit-scrollbar-thumb {
+  background: #c9baff;
+  border-radius: 10px;
+}
+
+.popular-card {
+  min-width: 130px;
+  max-width: 130px;
+  background: var(--white);
+  border: 1px solid #edf2f7;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.popular-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(111, 50, 228, 0.1);
+}
+
+.popular-card-img {
+  width: 100% !important;
+  height: 85px !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.popular-card-info {
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.popular-card-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.popular-card-price {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--purple-main);
+}
+
+.popular-card .btn-agregar {
+  margin-top: 4px !important;
+  width: 100% !important;
+  padding: 3px 0 !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  border: none !important;
+  background: var(--purple-main) !important;
+  color: #fff !important;
+  cursor: pointer !important;
+}
+
+.populares-vacio {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 10px 0;
 }

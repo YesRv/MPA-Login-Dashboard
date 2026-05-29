@@ -1,30 +1,34 @@
-import { fetchApiData } from "../utils/utils.js";
+import { fetchApiData, hashPassword } from "../utils/utils.js";
 import { homeView } from "../views/homeView.js";
 import { initHome } from "./homeController.js";
 
-export async function loginController(appContainer) {
+export async function loginController(appContainer, loginRoot) {
   // mensajes especiales, form
   const messageLoginUser = document.getElementById("message-login-user");
   const messageLoginNew = document.getElementById("message-login-new");
   const formNew = document.getElementById("form-new");
   const formLogin = document.getElementById("login-form");
 
-  // inputs
+  // LOGIN INPUTS
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
 
+  // CREATE INPUTS
   const usernameNewInput = document.getElementById("usernameNew");
   const emailNewInput = document.getElementById("useremail");
   const passwordNewInput = document.getElementById("passwordNew");
-  addLoginEventsListeners();
-  // CUENTA ADMINISTRATIVA
+  const passwordConfirmationInput = document.getElementById(
+    "passwordConfirmation",
+  );
 
-  const userAdm = "Kurohana-Adm";
-  const passAdm = "123456";
+  addLoginEventsListeners();
+
+  if (!formLogin || !usernameInput || !passwordInput) {
+    return;
+  }
 
   formLogin.addEventListener("submit", async (event) => {
     event.preventDefault();
-
     const usernameValue = usernameInput.value.trim();
     const passwordValue = passwordInput.value.trim();
 
@@ -34,45 +38,39 @@ export async function loginController(appContainer) {
     }
 
     try {
-      const data = await fetchApiData("/users");
-
-      if (userAdm === usernameValue && passAdm === passwordValue) {
-        messageLoginUser.innerText = "Welcome administrator";
-        localStorage.setItem("auth", "true");
-        localStorage.setItem("role", "admin");
-        localStorage.setItem("username", userAdm);
-        if (appContainer) {
-          appContainer.innerHTML = homeView();
-          initHome(userAdm, "admin", appContainer);
-        }
-        return true;
-      }
-
-      // validar que el men exista
-      const userExists = data.some(
-        (u) => u.username === usernameValue && u.password === passwordValue
+      const users = await fetchApiData("/users");
+      const hashedInputPassword = await hashPassword(passwordValue);
+      console.log("Pass: ", hashedInputPassword)
+      const user = users.find(
+        (u) =>
+          u.username === usernameValue && u.password === hashedInputPassword,
       );
 
-      if (userExists) {
-        messageLoginUser.textContent = "Welcome to Kurohana";
-        localStorage.setItem("auth", "true");
-        localStorage.setItem("role", "user");
-        localStorage.setItem("username", usernameValue);
-        if (appContainer) {
-          appContainer.innerHTML = homeView();
-          initHome(usernameValue, "user", appContainer);
-        }
-        return true;
+      if (!user) {
+        messageLoginUser.textContent = "Invalid username or password";
+        return false;
       }
 
-      messageLoginUser.textContent = "Invalid username or password";
-      return false;
-    } catch {
+      const role = user.role || "user";
+      messageLoginUser.textContent = `Welcome ${role === "admin" ? "administrator" : "to Kurohana"}`;
+      localStorage.setItem("auth", "true");
+      localStorage.setItem("role", role);
+      localStorage.setItem("username", usernameValue);
+      loginRoot.innerHTML = "";
+      const targetHash = "#home";
+      const currentHash = window.location.hash;
+      window.location.hash = targetHash;
+      if (currentHash === targetHash) {
+        window.dispatchEvent(new Event("hashchange"));
+      }
+      return true;
+    } catch (error) {
+      console.error(error);
       alert("Connection error — make sure JSON Server is running");
     }
   });
-  // CREAR USUARIO
 
+  // CREAR USUARIO
   formNew.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -80,61 +78,92 @@ export async function loginController(appContainer) {
     const password = passwordNewInput.value.trim();
     const email = emailNewInput.value.trim();
 
-    const userData = { username, email, password };
+    const hashedPassword = await hashPassword(password);
+    const userData = { username, email, password: hashedPassword };
 
     if (!username || !password || !email) {
-      messageLoginNew.innerText = "Please fill in all fields";
+      messageLoginNew.innerText = "Please fill in all the fields";
       return;
     }
+
+    const passwordConfirmation = passwordConfirmationInput.value.trim();
+    if (password !== passwordConfirmation) {
+      alert("Passwords don't match");
+      formNew.reset();
+      return;
+    }
+    // If the user fill all the fields the new user will be saved in the JSON API
     try {
-      let response;
-      response = await fetch("http://localhost:3000/users", {
+      const users = await fetchApiData("/users");
+
+      const usernameExists = users.some((user) => user.username === username);
+      if (usernameExists) {
+        messageLoginNew.innerText = "This username is already taken";
+        return;
+      }
+
+      const emailExists = users.some((user) => user.email === email);
+      if (emailExists) {
+        messageLoginNew.innerText = "This email is already registered";
+        return;
+      }
+
+      const response = await fetch("http://localhost:3000/users", {
         method: "POST",
-        body: JSON.stringify(userData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...userData, role: "user" }),
       });
-      messageLoginNew.innerText = `The account was created successfully.`;
-    } catch {
-      alert("Error Register");
+
+      if (response.ok) {
+        messageLoginNew.innerText = "The account was created successfully";
+        const tabs = document.querySelectorAll(".login-tab");
+        if (tabs && tabs[0]) tabs[0].click();
+        formNew.reset();
+      } else {
+        messageLoginNew.innerText = "Error creating account";
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error registering new user");
     }
   });
 }
 
 function addLoginEventsListeners() {
-  // contenedores del login
-  const welcome = document.getElementById("welcome");
-  const loginNew = document.getElementById("login-new");
-  const loginUser = document.getElementById("login-user");
+  const track = document.getElementById("slide-track");
+  const tabs = document.querySelectorAll(".login-tab");
+  const viewport = document.querySelector(".slide-viewport");
+  const panels = document.querySelectorAll(".slide-panel");
+  let currentIndex = 0;
 
-  // botones Welcome
-  const signInButton = document.getElementById("sign-in-button");
-  const signUpButton = document.getElementById("sign-up-button");
+  function updateViewportHeight(index) {
+    if (!viewport || !panels || !panels[index]) return;
+    const h = panels[index].offsetHeight;
+    viewport.style.height = h + "px";
+  }
 
-  // enlaces de span
+  function slideTo(index) {
+    if (!track) return;
+    track.style.transform = `translateX(${-index * 100}%)`;
+    tabs.forEach((t, i) => t.classList.toggle("active", i === index));
+    currentIndex = index;
+    updateViewportHeight(index);
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => slideTo(i));
+  });
+
   const toRegisterSpan = document.getElementById("to-register");
+  if (toRegisterSpan)
+    toRegisterSpan.addEventListener("click", () => slideTo(1));
+
   const toLoginSpan = document.getElementById("to-login");
+  if (toLoginSpan) toLoginSpan.addEventListener("click", () => slideTo(0));
 
-  // para iniciar sesion
-  signInButton.addEventListener("click", () => {
-    welcome.classList.add("hidden");
-    loginUser.classList.remove("hidden");
-  });
+  // initialize viewport height to the first panel
+  updateViewportHeight(0);
 
-  // para registrarse
-  signUpButton.addEventListener("click", () => {
-    welcome.classList.add("hidden");
-    loginNew.classList.remove("hidden");
-  });
-
-  // de registro a login
-  toLoginSpan.addEventListener("click", () => {
-    loginNew.classList.add("hidden");
-    loginUser.classList.remove("hidden");
-  });
-
-  // de login a registo
-  toRegisterSpan.addEventListener("click", () => {
-    loginUser.classList.add("hidden");
-    loginNew.classList.add("hidden");
-    loginNew.classList.remove("hidden");
-  });
+  // adjust height on window resize
+  window.addEventListener("resize", () => updateViewportHeight(currentIndex));
 }
