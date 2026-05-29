@@ -1,7 +1,6 @@
 import { fetchApiData } from "../utils/utils.js";
 import { homeView } from "../views/homeView.js";
 import { initHome } from "./homeController.js";
-import { hashPassword } from "../utils/utils.js";
 
 export async function loginController(appContainer, loginRoot) {
   // mensajes especiales, form
@@ -51,10 +50,6 @@ export async function loginController(appContainer, loginRoot) {
         initHome(userAdm, "admin", appContainer);
         return true;
       }
-      // HASSHH pal login 
-      const hashedInputPassword =
-        await hashPassword(passwordValue);
-
       // validar que el men exista
       const userExists = data.find(
         (u) => u.username === usernameValue && u.password === passwordValue,

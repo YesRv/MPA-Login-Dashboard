@@ -142,7 +142,7 @@
       "price": "55",
       "country": "japan",
       "id": "nysriy1MWGk",
-      "pedidos": 0
+      "pedidos": 4
     },
     {
       "url": "https://sal-pimienta.com/wp-content/uploads/2019/03/DSC_0305_2-1024x683.jpg",
@@ -628,8 +628,8 @@
       "password": "123",
       "id": "Brrh4b53734",
       "role": "user"
-    }
-     {
+    },
+    {
       "username": "badGyal",
       "email": "bbespana@gmail.com",
       "password": "798cfd01f8dddac12c15a944344b4d446bd55891e3ced97b5461c6f1bdc25010",
@@ -670,6 +670,22 @@
       "metodoPago": "transfer",
       "fecha": "2026-05-28T17:45:41.897Z",
       "id": "wRfK3Rhs3ME"
+    },
+    {
+      "nombre": "ÒRD-002",
+      "username": "Carmuand",
+      "items": [
+        {
+          "id": "nysriy1MWGk",
+          "nombre": "Ramen",
+          "precio": 55,
+          "cantidad": 4
+        }
+      ],
+      "total": "198.00",
+      "metodoPago": "cash",
+      "fecha": "2026-05-29T04:32:01.449Z",
+      "id": "Q7EucU1-row"
     }
   ],
   "coupons": [
