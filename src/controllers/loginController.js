@@ -62,9 +62,8 @@ export async function loginController(appContainer) {
       // validar que el men exista
 
       const userExists = data.some(
-        (u) => u.username === usernameValue && u.password === hashedInputPassword
-      )
-     
+        (u) => u.username === usernameValue && u.password === passwordValue
+      );
 
       if (userExists) {
         messageLoginUser.textContent = "Welcome to Kurohana";
