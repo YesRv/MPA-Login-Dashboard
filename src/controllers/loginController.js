@@ -47,8 +47,9 @@ export async function loginController(appContainer, loginRoot) {
         return true;
       }
       // validar que el men exista
-      const userExists = data.find(
-        (u) => u.username === usernameValue && u.password === passwordValue,
+
+      const userExists = data.some(
+        (u) => u.username === usernameValue && u.password === passwordValue
       );
 
       if (userExists) {
