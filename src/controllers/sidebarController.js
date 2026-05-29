@@ -18,10 +18,7 @@ export default function sidebarController(appContainer) {
         // Limpiar clases residuales del contenedor principal
         appContainer.classList.remove("sin-carrito");
         appContainer.innerHTML = "";
-        // Renderizar el login en su contenedor correcto (#login-root)
-        const loginRoot = document.getElementById("login-root");
-        loginRoot.innerHTML = loginView();
-        loginController(appContainer, loginRoot);
+        window.location.hash = "#login";
     })
 
     const btnSettings = document.getElementById("btn-settings");
