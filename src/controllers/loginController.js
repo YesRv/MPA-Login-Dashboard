@@ -1,6 +1,7 @@
 import { fetchApiData } from "../utils/utils.js";
 import { homeView } from "../views/homeView.js";
 import { initHome } from "./homeController.js";
+import { hashPassword } from "../utils/utils.js";
 
 export async function loginController(appContainer, loginRoot) {
   // mensajes especiales, form
@@ -74,6 +75,55 @@ export async function loginController(appContainer, loginRoot) {
     }
   });
 
+  // CUENTA PARA USERS - LOGIN
+
+  const hashedInputPassword =
+    await hashPassword(passwordValue);
+
+  const userExists = data.some(
+    (u) =>
+      u.username === usernameValue &&
+      u.password === hashedInputPassword
+  );
+
+  if (userExists) {
+
+    messageLoginUser.textContent =
+      "Welcome to Kurohana";
+
+    localStorage.setItem("auth", "true");
+    localStorage.setItem("role", "user");
+    localStorage.setItem("username", usernameValue);
+    loginRoot.innerHTML = "";
+      appContainer.innerHTML = homeView();
+      initHome(usernameValue, "user", appContainer);
+        return true;
+
+    if (appContainer) {
+
+      appContainer.innerHTML = homeView();
+
+      initHome(
+        usernameValue,
+        "user",
+        appContainer
+      );
+
+    }
+
+    return true;
+  }
+
+    messageLoginUser.textContent =
+      "Invalid username or password";
+
+    return false;
+
+
+
+
+
+
   // CREAR USUARIO
   formNew.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -82,7 +132,8 @@ export async function loginController(appContainer, loginRoot) {
     const password = passwordNewInput.value.trim();
     const email = emailNewInput.value.trim();
 
-    const userData = { username, email, password };
+    const hashedPassword = await hashPassword(password);
+    const userData = { username, email, password: hashedPassword };
 
     if (!username || !password || !email) {
       messageLoginNew.innerText = "Please fill in all the fields";
@@ -95,12 +146,12 @@ export async function loginController(appContainer, loginRoot) {
       formNew.reset();
       return;
     }
-
+    // If the user fill all the fields the new user will be save on the json
     try {
       const usersResponse = await fetch("http://localhost:3000/users");
       const users = await usersResponse.json();
 
-      // 2. Validate duplicated username
+      // Validate duplicated username
       const usernameExists = users.some((user) => user.username === username);
 
       if (usernameExists) {
@@ -108,7 +159,7 @@ export async function loginController(appContainer, loginRoot) {
         return;
       }
 
-      // 3. Validate duplicated email
+      // Validate duplicated email
       const emailExists = users.some((user) => user.email === email);
 
       if (emailExists) {
@@ -116,14 +167,8 @@ export async function loginController(appContainer, loginRoot) {
         return;
       }
 
-      // 4. Create new user object
-      const userData = {
-        username,
-        email,
-        password,
-      };
 
-      // 5. Save user
+      // Save user
       const response = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
