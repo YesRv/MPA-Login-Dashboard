@@ -174,8 +174,15 @@ return (`
         </div>
         <div id="modal-items"></div>
         <div id="modal-cuopon">
-          <input type="text" id="input-cuopon" placeholder="Cuopon code"/>
-          <button id="btn-apply-cuopon">Apply</button>
+          <div class="cuopon-header">
+            <span class="cuopon-label">🎟️ Coupon</span>
+            <button id="btn-toggle-cupones" type="button">View available coupons ▾</button>
+          </div>
+          <div id="cuopon-lista" class="cuopon-lista hidden"></div>
+          <div class="cuopon-input-row">
+            <input type="text" id="input-cuopon" placeholder="Or enter code manually"/>
+            <button id="btn-apply-cuopon">Apply</button>
+          </div>
         </div>
         <p>Total: <span id="modal-total">$0.00</span></p>
         <div id="modal-payment">

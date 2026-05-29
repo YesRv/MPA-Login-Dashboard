@@ -379,6 +379,11 @@
 
 .populares-section {
   margin-bottom: 30px;
+  background: linear-gradient(135deg, #d4c8ff 0%, #e0d0ff 50%, #fde0b0 100%);
+  border-radius: 20px;
+  padding: 20px 22px 18px 22px;
+  border: 1px solid #b8a5f0;
+  box-shadow: 0 4px 18px rgba(111, 50, 228, 0.15);
 }
 
 .populares-titulo {
@@ -400,7 +405,7 @@
 }
 
 .populares-container::-webkit-scrollbar-thumb {
-  background: var(--fnd3);
+  background: #c9baff;
   border-radius: 10px;
 }
 

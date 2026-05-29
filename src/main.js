@@ -6,11 +6,12 @@ import { initHome } from "./controllers/homeController.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const appContainer = document.getElementById("app");
+  const loginRoot = document.getElementById("login-root");
   const userLogin = localStorage.getItem("auth");
 
   if (!userLogin) {
-    appContainer.innerHTML = loginView();
-    loginController(appContainer);
+    loginRoot.innerHTML = loginView();
+    loginController(appContainer, loginRoot);
   } else {
     const role = localStorage.getItem("role") || "user";
     const username = localStorage.getItem("username") || "User";

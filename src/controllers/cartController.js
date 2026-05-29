@@ -126,12 +126,76 @@ function abrirModal() {
   const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
   modalTotal.textContent = `$${total.toFixed(2)}`;
 
+  // Resetear estado de cupón al abrir modal
+  document.getElementById("input-cuopon").value = "";
+  const lista = document.getElementById("cuopon-lista");
+  if (lista) {
+    lista.innerHTML = "";
+    lista.classList.add("hidden");
+  }
+  const btnToggle = document.getElementById("btn-toggle-cupones");
+  if (btnToggle) btnToggle.textContent = "View available coupons ▾";
+  totalConDescuento = [];
+
   modalOverlay.classList.remove("hidden");
+  cargarCupones(total);
 }
 
 function cerrarModal() {
   const modalOverlay = document.getElementById("modal-overlay");
   modalOverlay.classList.add("hidden");
+}
+
+async function cargarCupones(totalActual) {
+  const lista = document.getElementById("cuopon-lista");
+  if (!lista) return;
+
+  lista.innerHTML = `<p style="font-size:0.8rem; color: var(--txt3); text-align:center; padding: 8px 0;">Loading coupons...</p>`;
+
+  try {
+    const response = await fetch("http://localhost:3000/coupons");
+    const coupons = await response.json();
+
+    lista.innerHTML = "";
+
+    if (!coupons.length) {
+      lista.innerHTML = `<p style="font-size:0.8rem; color: var(--txt3); text-align:center; padding: 8px 0;">No coupons available</p>`;
+      return;
+    }
+
+    const minimosPorDescuento = { 5: 100, 10: 200, 15: 300 };
+
+    coupons.forEach((cupon) => {
+      const minimo = minimosPorDescuento[Number(cupon.discount)] || 0;
+      const disponible = totalActual >= minimo;
+
+      const card = document.createElement("div");
+      card.classList.add("cuopon-card");
+      if (!disponible) card.style.opacity = "0.45";
+
+      card.innerHTML = `
+        <div class="cuopon-card-info">
+          <span class="cuopon-card-name">${cupon.name}</span>
+          <span class="cuopon-card-desc">${cupon.description}${!disponible ? ` · Min. $${minimo}` : ""}</span>
+        </div>
+        <span class="cuopon-card-badge">${cupon.discount}% off</span>
+      `;
+
+      if (disponible) {
+        card.addEventListener("click", () => {
+          // Marcar como seleccionado visualmente
+          lista.querySelectorAll(".cuopon-card").forEach(c => c.classList.remove("selected"));
+          card.classList.add("selected");
+          // Autocompletar el input
+          document.getElementById("input-cuopon").value = cupon.name;
+        });
+      }
+
+      lista.appendChild(card);
+    });
+  } catch (e) {
+    lista.innerHTML = `<p style="font-size:0.8rem; color:#e55; text-align:center; padding: 8px 0;">Could not load coupons</p>`;
+  }
 }
 
 async function aplicarCupon() {
@@ -281,6 +345,18 @@ export function initCarrito() {
   const btnXModal = document.getElementById("btn-close-modal");
   if (btnXModal) {
     btnXModal.addEventListener("click", cerrarModal);
+  }
+
+  const btnToggleCupones = document.getElementById("btn-toggle-cupones");
+  if (btnToggleCupones) {
+    btnToggleCupones.addEventListener("click", () => {
+      const lista = document.getElementById("cuopon-lista");
+      const abierto = !lista.classList.contains("hidden");
+      lista.classList.toggle("hidden");
+      btnToggleCupones.textContent = abierto
+        ? "View available coupons ▾"
+        : "Hide coupons ▴";
+    });
   }
 
   const btnApplyCoupon = document.getElementById("btn-apply-cuopon");
