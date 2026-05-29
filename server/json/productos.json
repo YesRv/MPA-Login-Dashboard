@@ -160,7 +160,7 @@
       "price": "58",
       "country": "japan",
       "id": "pNpBWBTMjtk",
-      "pedidos": 0
+      "pedidos": 6
     },
     {
       "url": "https://cocinista.b-cdn.net/download/bancorecursos/recetas/receta-fideos-ramen-con-miso.jpg",
@@ -686,6 +686,22 @@
       "metodoPago": "cash",
       "fecha": "2026-05-29T04:32:01.449Z",
       "id": "Q7EucU1-row"
+    },
+    {
+      "nombre": "ÒRD-003",
+      "username": "Carmuand",
+      "items": [
+        {
+          "id": "pNpBWBTMjtk",
+          "nombre": "Tonkotsu Ramen",
+          "precio": 58,
+          "cantidad": 6
+        }
+      ],
+      "total": "295.80",
+      "metodoPago": "cash",
+      "fecha": "2026-05-29T11:44:25.665Z",
+      "id": "v0dN6pUTQPw"
     }
   ],
   "coupons": [

@@ -4,11 +4,11 @@ export function loginView() {
 
   <div class="brand">
     <h1 class="brand-name">Kurohana</h1>
-    <p class="brand-sub">cocina asiática</p>
+    <p class="brand-sub">Asian Cuisiner</p>
   </div>
 
   <div class="login-tabs">
-    <button class="login-tab active" data-panel="0">Sign in</button>
+    <button class="login-tab active" data-panel="0">Login</button>
     <button class="login-tab" data-panel="1">Sign up</button>
   </div>
 
@@ -23,7 +23,7 @@ export function loginView() {
           <label for="password">Password</label>
           <input type="password" id="password" placeholder="••••••••">
 
-          <button type="submit">Sign In</button>
+          <button type="submit">Login</button>
 
           <div class="form-footer">
             <p>Don't you have an account? <span id="to-register">Sign Up</span></p>
@@ -35,20 +35,20 @@ export function loginView() {
 
       <article class="slide-panel" id="login-new">
         <form id="form-new">
-          <label for="usernameNew">User</label>
+          <label class="label-form" for="usernameNew">User</label>
           <input type="text" id="usernameNew" placeholder="username">
 
-          <label for="useremail">Email</label>
+          <label class="label-form" for="useremail">Email</label>
           <input type="email" id="useremail" placeholder="maria@example.com">
 
-          <label for="passwordNew">Password</label>
+          <label class="label-form" for="passwordNew">Password</label>
           <input type="password" id="passwordNew" placeholder="••••••••">
 
-          <label for="passwordConfirmation">Confirm Password</label>
+          <label class="label-form" for="passwordConfirmation">Confirm Password</label>
           <input type="password" id="passwordConfirmation" placeholder="••••••••">
 
           <div class="col-span-1 space-y-2">
-            <label for="profileRol">Choose a rol profile</label>
+            <label for="profileRol label-form">Choose a rol profile</label>
             <select id="profileRol" name="profileRol" required>
               <option value="white">Choose...</option>
               <option value="user">USER</option>
@@ -59,7 +59,7 @@ export function loginView() {
           <button id="adduser" type="submit">Sign Up</button>
 
           <div class="form-footer-New">
-            <p>Do you have an account? <span id="to-login">Sign In</span></p>
+            <p>Do you have an account? <span id="to-login">Login</span></p>
           </div>
 
           <p id="message-login-new"></p>
