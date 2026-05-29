@@ -1,7 +1,6 @@
-import { fetchApiData } from "../utils/utils.js";
+import { fetchApiData, hashPassword } from "../utils/utils.js";
 import { homeView } from "../views/homeView.js";
 import { initHome } from "./homeController.js";
-import { hashPassword } from "../utils/utils.js";
 
 export async function loginController(appContainer, loginRoot) {
   // mensajes especiales, form
@@ -10,7 +9,7 @@ export async function loginController(appContainer, loginRoot) {
   const formNew = document.getElementById("form-new");
   const formLogin = document.getElementById("login-form");
 
-  // LOGIN INPUTS 
+  // LOGIN INPUTS
   const usernameInput = document.getElementById("username");
   const passwordInput = document.getElementById("password");
 
@@ -18,18 +17,18 @@ export async function loginController(appContainer, loginRoot) {
   const usernameNewInput = document.getElementById("usernameNew");
   const emailNewInput = document.getElementById("useremail");
   const passwordNewInput = document.getElementById("passwordNew");
-  const passwordConfirmationInput = document.getElementById("passwordConfirmation");
+  const passwordConfirmationInput = document.getElementById(
+    "passwordConfirmation",
+  );
 
   addLoginEventsListeners();
 
-  // CUENTA ADMINISTRATIVA
-
-  const userAdm = "Kurohana-Adm";
-  const passAdm = "123456";
+  if (!formLogin || !usernameInput || !passwordInput) {
+    return;
+  }
 
   formLogin.addEventListener("submit", async (event) => {
     event.preventDefault();
-
     const usernameValue = usernameInput.value.trim();
     const passwordValue = passwordInput.value.trim();
 
@@ -39,86 +38,37 @@ export async function loginController(appContainer, loginRoot) {
     }
 
     try {
-      const data = await fetchApiData("/users");
-
-      if (userAdm === usernameValue && passAdm === passwordValue) {
-        messageLoginUser.innerText = "Welcome administrator";
-        localStorage.setItem("auth", "true");
-        localStorage.setItem("role", "admin");
-        localStorage.setItem("username", userAdm);
-        window.location.hash = "#home";
-        return true;
-      }
-      // validar que el men exista
-
-      const userExists = data.some(
-        (u) => u.username === usernameValue && u.password === passwordValue
+      const users = await fetchApiData("/users");
+      const hashedInputPassword = await hashPassword(passwordValue);
+      console.log("Pass: ", hashedInputPassword)
+      const user = users.find(
+        (u) =>
+          u.username === usernameValue && u.password === hashedInputPassword,
       );
 
-      if (userExists) {
-        messageLoginUser.textContent = "Welcome to Kurohana";
-        localStorage.setItem("auth", "true");
-        localStorage.setItem("role", "user");
-        localStorage.setItem("username", usernameValue);
-        window.location.hash = "#home";
-        return true;
+      if (!user) {
+        messageLoginUser.textContent = "Invalid username or password";
+        return false;
       }
 
-      messageLoginUser.textContent = "Invalid username or password";
-      return false;
-    } catch {
+      const role = user.role || "user";
+      messageLoginUser.textContent = `Welcome ${role === "admin" ? "administrator" : "to Kurohana"}`;
+      localStorage.setItem("auth", "true");
+      localStorage.setItem("role", role);
+      localStorage.setItem("username", usernameValue);
+      loginRoot.innerHTML = "";
+      const targetHash = "#home";
+      const currentHash = window.location.hash;
+      window.location.hash = targetHash;
+      if (currentHash === targetHash) {
+        window.dispatchEvent(new Event("hashchange"));
+      }
+      return true;
+    } catch (error) {
+      console.error(error);
       alert("Connection error — make sure JSON Server is running");
     }
   });
-
-  // CUENTA PARA USERS - LOGIN
-
-  const hashedInputPassword =
-    await hashPassword(passwordValue);
-
-  const userExists = data.some(
-    (u) =>
-      u.username === usernameValue &&
-      u.password === hashedInputPassword
-  );
-
-  if (userExists) {
-
-    messageLoginUser.textContent =
-      "Welcome to Kurohana";
-
-    localStorage.setItem("auth", "true");
-    localStorage.setItem("role", "user");
-    localStorage.setItem("username", usernameValue);
-    loginRoot.innerHTML = "";
-      appContainer.innerHTML = homeView();
-      initHome(usernameValue, "user", appContainer);
-        return true;
-
-    if (appContainer) {
-
-      appContainer.innerHTML = homeView();
-
-      initHome(
-        usernameValue,
-        "user",
-        appContainer
-      );
-
-    }
-
-    return true;
-  }
-
-    messageLoginUser.textContent =
-      "Invalid username or password";
-
-    return false;
-
-
-
-
-
 
   // CREAR USUARIO
   formNew.addEventListener("submit", async (event) => {
@@ -142,46 +92,39 @@ export async function loginController(appContainer, loginRoot) {
       formNew.reset();
       return;
     }
-    // If the user fill all the fields the new user will be save on the json
+    // If the user fill all the fields the new user will be saved in the JSON API
     try {
-      const usersResponse = await fetch("http://localhost:3000/users");
-      const users = await usersResponse.json();
+      const users = await fetchApiData("/users");
 
-      // Validate duplicated username
       const usernameExists = users.some((user) => user.username === username);
-
       if (usernameExists) {
         messageLoginNew.innerText = "This username is already taken";
         return;
       }
 
-      // Validate duplicated email
       const emailExists = users.some((user) => user.email === email);
-
       if (emailExists) {
         messageLoginNew.innerText = "This email is already registered";
         return;
       }
 
-
-      // Save user
       const response = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({ ...userData, role: "user" }),
       });
 
       if (response.ok) {
         messageLoginNew.innerText = "The account was created successfully";
         const tabs = document.querySelectorAll(".login-tab");
-        // trigger the first tab click so UI classes and heights update consistently
         if (tabs && tabs[0]) tabs[0].click();
         formNew.reset();
       } else {
         messageLoginNew.innerText = "Error creating account";
       }
-    } catch {
-      alert("Error Register");
+    } catch (error) {
+      console.error(error);
+      alert("Error registering new user");
     }
   });
 }
@@ -189,19 +132,19 @@ export async function loginController(appContainer, loginRoot) {
 function addLoginEventsListeners() {
   const track = document.getElementById("slide-track");
   const tabs = document.querySelectorAll(".login-tab");
-  const viewport = document.querySelector('.slide-viewport');
-  const panels = document.querySelectorAll('.slide-panel');
+  const viewport = document.querySelector(".slide-viewport");
+  const panels = document.querySelectorAll(".slide-panel");
   let currentIndex = 0;
 
   function updateViewportHeight(index) {
     if (!viewport || !panels || !panels[index]) return;
     const h = panels[index].offsetHeight;
-    viewport.style.height = h + 'px';
+    viewport.style.height = h + "px";
   }
 
   function slideTo(index) {
     if (!track) return;
-    track.style.transform = `translateX(${ -index * 100 }%)`;
+    track.style.transform = `translateX(${-index * 100}%)`;
     tabs.forEach((t, i) => t.classList.toggle("active", i === index));
     currentIndex = index;
     updateViewportHeight(index);
@@ -212,7 +155,8 @@ function addLoginEventsListeners() {
   });
 
   const toRegisterSpan = document.getElementById("to-register");
-  if (toRegisterSpan) toRegisterSpan.addEventListener("click", () => slideTo(1));
+  if (toRegisterSpan)
+    toRegisterSpan.addEventListener("click", () => slideTo(1));
 
   const toLoginSpan = document.getElementById("to-login");
   if (toLoginSpan) toLoginSpan.addEventListener("click", () => slideTo(0));
@@ -221,5 +165,5 @@ function addLoginEventsListeners() {
   updateViewportHeight(0);
 
   // adjust height on window resize
-  window.addEventListener('resize', () => updateViewportHeight(currentIndex));
+  window.addEventListener("resize", () => updateViewportHeight(currentIndex));
 }
