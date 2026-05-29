@@ -79,7 +79,7 @@
       "price": "32",
       "country": "japan",
       "id": "aJbZfMMsTjc",
-      "pedidos": 0
+      "pedidos": 1
     },
     {
       "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWD3Ayyjnr2j39M-O-BHr1kABkoCr5qj3j8g&s",
@@ -88,7 +88,7 @@
       "price": "32",
       "country": "japan",
       "id": "F0mEVu5Xpv4",
-      "pedidos": 0
+      "pedidos": 13
     },
     {
       "url": "https://www.orientalmarket.es/wp-content/uploads/2021/03/kelly-visel-MIMgqOQLnOc-unsplash.jpg",
@@ -97,7 +97,7 @@
       "price": "32",
       "country": "japan",
       "id": "IN28NtAIN6w",
-      "pedidos": 0
+      "pedidos": 1
     },
     {
       "url": "https://sugaryums.com/wp-content/uploads/2023/06/Japanese-Black-Sesame-Ice-Cream-Recipe-SugarYums-1.jpg",
@@ -589,51 +589,45 @@
   "users": [
     {
       "username": "Kurohana-Adm",
-      "email": "undefined",
-      "password": "123456",
+      "email": "kurohana@admin.gmail.com",
+      "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
       "id": "imSwzcHFA2U",
       "role": "admin"
     },
     {
       "username": "maria520",
       "email": "maria@gmail.com",
-      "password": "123",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
       "id": "nUAhW6YXV0k",
       "role": "user"
     },
     {
       "username": "Melissa",
       "email": "melissagarridos@gmail.com",
-      "password": "Melissa123456",
+      "password": "7db5026dd502a59031b7a57d1f9956b03d11b35d9f90d1af825fa8da9f491960",
       "id": "9_2azemYMK0",
-      "role": "user"
-    },
-    {
-      "username": "Carmuand",
-      "email": "carlosmu@gmail.com",
-      "password": "090501",
-      "id": "MaV-sxlR89U",
       "role": "user"
     },
     {
       "username": "YesVert",
       "email": "yezvert123@gmail.com",
-      "password": "123456CC",
+      "password": "da7996fe1e2d1874f01374af23ca3e3b73a9e11b3ed10ff859dd12aaea32fea8",
       "id": "Vplf4TAJXYg",
       "role": "user"
     },
     {
-      "username": "lili",
-      "email": "lili@gmail.com",
-      "password": "123",
-      "id": "Brrh4b53734",
-      "role": "user"
+      "username": "Zerik",
+      "email": "zerik@enterprise.com.co",
+      "password": "c202bf9bd97c3940ccea4c693511b3588c0f5899d1c84d0804e16fc4fed7702e",
+      "role": "user",
+      "id": "SnPNhNfljJU"
     },
-     {
-      "username": "badGyal",
-      "email": "bbespana@gmail.com",
-      "password": "798cfd01f8dddac12c15a944344b4d446bd55891e3ced97b5461c6f1bdc25010",
-      "id": "8rZF41Lqg6w"
+    {
+      "username": "Luisita",
+      "email": "luisitarose@gmail.com",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "role": "user",
+      "id": "yD-GB4vjefQ"
     }
   ],
   "orders": [
@@ -702,6 +696,50 @@
       "metodoPago": "cash",
       "fecha": "2026-05-29T11:44:25.665Z",
       "id": "v0dN6pUTQPw"
+    },
+    {
+      "nombre": "ÒRD-004",
+      "username": "YesVert",
+      "items": [
+        {
+          "id": "aJbZfMMsTjc",
+          "nombre": "Mochi",
+          "precio": 32,
+          "cantidad": 1
+        },
+        {
+          "id": "F0mEVu5Xpv4",
+          "nombre": "Dorayaki",
+          "precio": 32,
+          "cantidad": 1
+        },
+        {
+          "id": "IN28NtAIN6w",
+          "nombre": "Taiyaki dulce",
+          "precio": 32,
+          "cantidad": 1
+        }
+      ],
+      "total": "0.00",
+      "metodoPago": "cash",
+      "fecha": "2026-05-29T14:12:23.037Z",
+      "id": "o5GRlNw4Pl4"
+    },
+    {
+      "nombre": "ÒRD-005",
+      "username": "Luisita",
+      "items": [
+        {
+          "id": "F0mEVu5Xpv4",
+          "nombre": "Dorayaki",
+          "precio": 32,
+          "cantidad": 12
+        }
+      ],
+      "total": "326.40",
+      "metodoPago": "cash",
+      "fecha": "2026-05-29T14:20:19.758Z",
+      "id": "ShtL-f8v_zU"
     }
   ],
   "coupons": [
