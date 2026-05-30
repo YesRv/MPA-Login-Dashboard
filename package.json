@@ -14,5 +14,13 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
     "tailwindcss": "^4.3.0"
-  }
+  },
+  "scripts": {
+  "dev": "vite",
+  "json": "json-server --watch server/json/productos.json --port 3000",
+  "build": "vite build",
+  "preview": "vite preview"
 }
+}
+
+
