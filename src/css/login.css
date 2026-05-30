@@ -1,6 +1,9 @@
 /* ========== LOGIN ========== */
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&family=DM+Sans:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aguafina+Script&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Miranda+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+
 
 #login-root {
     position: fixed;
@@ -8,11 +11,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('/src/assets/img/login-bg.jpg');
+    background-image: url('/src/assets/img/login-bg2.png');
     background-size: cover;
     background-position: center;
     overflow-y: auto;
     z-index: 9999;
+    --font-higuen: 'Higuen', sans-serif;
+    --font-agua-marina: 'Aguafina Script', sans-serif;
+    --fira-sans: 'Fira Sans', sans-serif;
 }
 
 #login-root:empty {
@@ -58,7 +64,7 @@
 
 .container-login .brand-name {
     display: block;
-    font-family: 'Bankai';
+     font-family: var(--font-higuen);
     font-weight: 400;
     color: #ffffff;
     text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
@@ -68,9 +74,10 @@
 
 .container-login .brand-sub {
     display: block;
-    font-family: 'Bankai', sans-serif;
-    font-size: 13px;
-    color: var(--color4);
+    font-family: var(--font-agua-marina);
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--txt1);
     letter-spacing: 0.22em;
     margin-top: 8px;
     text-transform: uppercase;

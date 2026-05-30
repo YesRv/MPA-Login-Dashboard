@@ -25,10 +25,6 @@ export function loginView() {
 
           <button type="submit">Login</button>
 
-          <div class="form-footer">
-            <p>Don't you have an account? <span id="to-register">Sign Up</span></p>
-          </div>
-
           <p id="message-login-user"></p>
         </form>
       </article>
@@ -47,20 +43,7 @@ export function loginView() {
           <label class="label-form" for="passwordConfirmation">Confirm Password</label>
           <input type="password" id="passwordConfirmation" placeholder="••••••••">
 
-          <div class="col-span-1 space-y-2">
-            <label for="profileRol label-form">Choose a rol profile</label>
-            <select id="profileRol" name="profileRol" required>
-              <option value="white">Choose...</option>
-              <option value="user">USER</option>
-              <option value="blue">ADMIN</option>
-            </select>
-          </div>
-
           <button id="adduser" type="submit">Sign Up</button>
-
-          <div class="form-footer-New">
-            <p>Do you have an account? <span id="to-login">Login</span></p>
-          </div>
 
           <p id="message-login-new"></p>
         </form>

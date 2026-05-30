@@ -15,32 +15,52 @@
     src: url(/src/assets/font/Bankai\ Demo\ Version.otf) format('opentype');
 }
 
+@font-face {
+    font-family: "Higuen";
+    src: url(/src/assets/font/Higuen\ Serif.otf) format('opentype');
+}
+
+
+
+
 /* ========== VARIABLES GLOBALES ========== */
 
 :root {
-    --fnd1: #F0EEFF;
-    --fnd2: #FFFFFF;
-    --fnd3: #E0D9FF;
-    --color1: #491cb0;
-    --color2: #6A4FD8;
-    --color3: #5B3FBF;
-    --color4: #F4A23A;
-    --color5: #4CAF84;
-    --color6: #8c78f3;
-    --txt1: #1A1A2E;
-    --txt2: #4A4A6A;
-    --txt3: #9090B0;
+  /* fondos */
+  --fnd1: #232323;
+  --fnd2: #161412;
+  --fnd3: #1E1C18;
 
-    --purple-main: #6f32e4;
-    --purple-light: #f3eeff;
-    --purple-dark: #491cb0;
-    --text-dark: #2c2930;
-    --text-muted: #8e8a94;
-    --bg-app: #f8f9fc;
-    --white: #ffffff;
-    --border-radius: 16px;
+  /* rojos lacados (acento primario) */
+  --color1: #C0392B;
+  --color2: #E84040;
+  --color3: #8B1A1A;
+
+  /* acentos secundarios */
+  --color4: #D4A520;   /* dorado */
+  --color5: #4A7C59;   /* jade */
+  --color6: #8C6A3F;   /* Toasted Bamboo */
+
+  /* texto */
+  --txt1: #F5F0E8;
+  --txt2: #B0A898;
+  --txt3: #5C5650;
+
+
+  /* aliases semánticos */
+  --red-main:   #C0392B;
+  --red-light:  #3A1212;
+  --red-dark:   #8B1A1A;
+  --gold-main:  #D4A520;
+  --jade-main:  #4A7C59;
+  --text-dark:  #F5F0E8;
+  --text-muted: #B0A898;
+  --bg-app:     #0D0D0D;
+  --white:      #F5F0E8;
+  --black:      #050505;
+
+  --border-radius: 16px;
 }
-
 /* ========== BASE ========== */
 
 body {

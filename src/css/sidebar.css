@@ -10,9 +10,9 @@
     flex-direction: column;
     font-family: 'Bankai';
     color: var(--fnd1);
-    background: linear-gradient(160deg, #6A4FD8 0%, #491cb0 50%, #2e0f7a 100%);
-    border-right: 1px solid #7c5ce0;
-    box-shadow: 4px 0 18px rgba(73, 28, 176, 0.35);
+    background: linear-gradient( 160deg,  #C0392B 0%,  #8B1A1A 50%,  #4A0D0D 100%);
+    border-right: 1px solid  #4A0D0D ;
+    box-shadow: 4px 0 18px rgba(176, 28, 28, 0.35);
     box-sizing: border-box;
 }
 
@@ -68,7 +68,7 @@
     width: 100%;
     gap: 10px;
     border-radius: 50px;
-    background-color: #0000000a;
+    background-color: #79030383;
 }
 
 .option {
